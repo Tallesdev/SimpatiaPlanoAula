@@ -1,0 +1,811 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.drop {
+  margin: 20px;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+select, input {
+  padding: 8px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+#outroInput {
+  display: none; /* Esconde o input inicialmente */
+  margin: 0 auto;
+}
+
+/* Estilo para o input quando a opção "Outro" é selecionada */
+select option[value="outro"]:checked + #outroInput {
+  display: block;
+}
+
+
+header, footer {
+    background-color: #0077cc;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+header img {
+    max-width: 100px;
+    margin-right: 10px;
+}
+.hidden {
+    display: none;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+nav a {
+    color: #0077cc;
+    text-decoration: none;
+    margin: 0 10px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s; /* Adicionado um efeito de transição para suavizar a mudança de cor */
+}
+
+nav a:hover {
+    background-color: #005a99;
+    color: #fff;
+}
+
+.form-container {
+    margin-top: 20px;
+}
+
+
+.close:hover,
+.close:focus {
+  box-shadow: inset -8.10em 0 0 0 var(--hover), inset 8.10em 0 0 0 var(--hover);
+}
+
+.close {
+  --color: #0077cc;
+  --hover: #0077cc;
+}
+
+button {
+  color: var(--color);
+  transition: 0.25s;
+}
+button:hover, button:focus {
+  border-color: var(--hover);
+  color: #fff;
+}
+
+
+button {
+  background: none;
+  border: 2px solid;
+  font: inherit;
+  line-height: 1;
+  margin: 0.5em;
+  padding: 1em 2em;
+  cursor: pointer;
+}
+
+h1 {
+  font-weight: 400;
+}
+
+code {
+  color: #e4cb58;
+  font: inherit;
+}
+
+.get-in-touch {
+    max-width: 800px;
+    margin: 50px auto;
+    position: relative;
+  
+  }
+  .get-in-touch .title {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 3.2em;
+    line-height: 48px;
+    padding-bottom: 48px;
+    color: #5543ca;
+    background: #5543ca;
+    background: -moz-linear-gradient(left,#f4524d  0%,#5543ca 100%) !important;
+    background: -webkit-linear-gradient(left,#f4524d  0%,#5543ca 100%) !important;
+    background: linear-gradient(to right,#f4524d  0%,#5543ca  100%) !important;
+    -webkit-text-fill-color: transparent !important;
+    -webkit-background-clip: text; /* Prefixo de fornecedor para navegadores WebKit */
+    background-clip: text; /* Propriedade padrão */
+}
+  
+  .contact-form .form-field {
+    position: relative;
+    margin: 32px 0;
+  }
+  .contact-form .input-text {
+    display: block;
+    width: 100%;
+    height: 36px;
+    border-width: 0 0 2px 0;
+    border-color: #5543ca;
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 400;
+  }
+  .contact-form .input-text:focus {
+    outline: none;
+  }
+  .contact-form .input-text:focus + .label,
+  .contact-form .input-text.not-empty + .label {
+    -webkit-transform: translateY(-24px);
+            transform: translateY(-24px);
+  }
+  .contact-form .label {
+    position: absolute;
+    left: 20px;
+    bottom: 11px;
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 400;
+    color: #5543ca;
+    cursor: text;
+    transition: -webkit-transform .2s ease-in-out;
+    transition: transform .2s ease-in-out;
+    transition: transform .2s ease-in-out, 
+    -webkit-transform .2s ease-in-out;
+  }
+  .contact-form .submit-btn {
+    display: inline-block;
+    background-color: #000;
+     background-image: linear-gradient(125deg,#a72879,#064497);
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 16px;
+    padding: 8px 16px;
+    border: none;
+    width:200px;
+    cursor: pointer;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+ }
+
+ .body1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 10px;
+    font-family: "Poppins", sans-serif;
+    background: #0077cc;
+ }
+
+ .container {
+  margin-top: 30px;
+    max-width: 800px;
+    background: #fff;
+    width: 800px;
+    padding: 25px 40px 10px 40px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+ }
+
+ .container .text {
+  text-align: center;
+  font-size: 41px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(
+      to right,
+      #5691e4,
+      #5543ca,
+      #5691e4,
+      #5543ca
+  );
+  -webkit-background-clip: text;
+  background-clip: text; /* Propriedade padrão */
+  -webkit-text-fill-color: transparent;
+  color: transparent; /* Para garantir a transparência em navegadores que não suportam background-clip */
+}
+
+ .container form {
+    padding: 30px 0 0 0;
+ }
+ .container form .form-row {
+    display: flex;
+    margin: 32px 0;
+ }
+
+ form .form-row .input-data {
+    width: 100%;
+    height: 40px;
+    margin: 0 20px;
+    position: relative;
+ }
+
+ form .form-row .textarea {
+    height: 70px;
+ }
+ .input-data input,
+ .textarea textarea {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 17px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+ }
+ .input-data input:focus ~ label,
+ .textarea textarea:focus ~ label,
+ .input-data input:valid ~ label,
+ .textarea textarea:valid ~ label {
+    transform: translateY(-20px);
+    font-size: 14px;
+    color: #3498db;
+ }
+
+ .textarea textarea {
+    resize: none;
+    padding-top: 10px;
+ }
+ .input-data label {
+    position: absolute;
+    pointer-events: none;
+    bottom: 10px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+ }
+ .textarea label {
+    width: 100%;
+    bottom: 40px;
+    background: #fff;
+ }
+ .input-data .underline {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+ }
+ .input-data .underline:before {
+    position: absolute;
+    content: "";
+    height: 2px;
+    width: 100%;
+    background: #3498db;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+ }
+ .input-data input:focus ~ .underline:before,
+ .input-data input:valid ~ .underline:before,
+ .textarea textarea:focus ~ .underline:before,
+ .textarea textarea:valid ~ .underline:before {
+    transform: scale(1);
+ }
+ .submit-btn .input-data {
+    overflow: hidden;
+    height: 45px !important;
+    width: 25% !important;
+ }
+ .submit-btn .input-data .inner {
+    height: 100%;
+    width: 300%;
+    position: absolute;
+    left: -100%;
+    background: -webkit-linear-gradient(
+       right,
+       #56d8e4,
+       #9f01ea,
+       #56d8e4,
+       #9f01ea
+    );
+    transition: all 0.4s;
+ }
+ .submit-btn .input-data:hover .inner {
+    left: 0;
+ }
+ .submit-btn .input-data input {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+ }
+ .met {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -30px;
+}
+
+ @media (max-width: 700px) {
+    .container .text {
+       font-size: 30px;
+    }
+    .container form {
+       padding: 10px 0 0 0;
+    }
+    .container form .form-row {
+       display: block;
+    }
+    form .form-row .input-data {
+       margin: 35px 0 !important;
+    }
+    .submit-btn .input-data {
+       width: 40% !important;
+    }
+    
+ }
+
+
+ @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.ssk {
+  font-family: 'Ubuntu', sans-serif;
+  color: #000;
+  margin: 0;
+  padding: 3em 1em;
+  display: flex;
+  justify-content: center;
+}
+
+.checkbox-container.middle {
+  margin-left: 40px; /* Isso empurra a caixa de checkbox para a direita */
+}
+
+/* Adicione este trecho de CSS */
+.checkbox-container.middle label {
+  margin-left: 20px; /* Ajuste conforme necessário */
+}
+
+*:not(:empty) {
+  transform-style: preserve-3d;
+}
+
+/* ... (other styles remain unchanged) */
+
+.flipBox {
+  position: relative;
+  display: block;
+  text-align: left;
+  margin: 1em;
+  cursor: pointer;
+}
+
+.flipBox:active > .flipBox_boxOuter {
+  height: 25%;
+}
+.flipBox span {
+  padding-left: 1.25em;
+}
+.flipBox > input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  position: fixed;
+}
+.flipBox > input:checked ~ .flipBox_boxOuter {
+  -webkit-animation: flipBox1 1s forwards linear;
+          animation: flipBox1 1s forwards linear;
+}
+.flipBox > input:checked ~ .flipBox_boxOuter .flipBox_box {
+  -webkit-animation: flipBox2 1s forwards ease-in-out;
+          animation: flipBox2 1s forwards ease-in-out;
+}
+.flipBox > input:checked ~ .flipBox_shadow {
+  -webkit-animation: flipBox3 1s forwards ease-in-out;
+          animation: flipBox3 1s forwards ease-in-out;
+}
+.flipBox > input:not(:checked) ~ .flipBox_boxOuter {
+  -webkit-animation: flipBox4 1s forwards linear;
+          animation: flipBox4 1s forwards linear;
+}
+.flipBox > input:not(:checked) ~ .flipBox_boxOuter .flipBox_box {
+  -webkit-animation: flipBox5 1s forwards ease-in-out;
+          animation: flipBox5 1s forwards ease-in-out;
+}
+.flipBox > input:not(:checked) ~ .flipBox_shadow {
+  -webkit-animation: flipBox6 1s forwards ease-in-out;
+          animation: flipBox6 1s forwards ease-in-out;
+}
+.flipBox > input:disabled ~ * {
+  cursor: not-allowed;
+}
+.flipBox > input:disabled ~ .flipBox_boxOuter {
+  height: 0%;
+}
+.flipBox > input:disabled ~ .flipBox_boxOuter .flipBox_box > div:nth-child(6) {
+  background-color: #ccc;
+}
+.flipBox > input:disabled ~ .flipBox_boxOuter .flipBox_box > div:nth-child(-n+5), .flipBox > input:disabled ~ .flipBox_boxOuter ~ .flipBox_shadow {
+  display: none;
+}
+.flipBox > input:focus-visible ~ span {
+  outline: 1px #000 solid;
+  outline-offset: 0.25em;
+}
+.flipBox_boxOuter {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1em;
+  height: 1em;
+  transform-origin: top;
+  transition: height 0.25s;
+}
+.flipBox_box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1em;
+  height: 100%;
+  transform: translate(-50%, -50%);
+}
+.flipBox_box > div {
+  position: absolute;
+  width: 1em;
+  box-shadow: 0 0 0.25em #0007 inset;
+}
+.flipBox_box > div:nth-child(1) {
+  background-image: linear-gradient(green, white);
+  transform: rotateY(0deg) translateX(50%) rotateY(90deg);
+  height: 100%;
+}
+.flipBox_box > div:nth-child(2) {
+  background-image: linear-gradient(green, white);
+  transform: rotateY(90deg) translateX(50%) rotateY(90deg);
+  height: 100%;
+}
+.flipBox_box > div:nth-child(3) {
+  background-image: linear-gradient(green, white);
+  transform: rotateY(180deg) translateX(50%) rotateY(90deg);
+  height: 100%;
+}
+.flipBox_box > div:nth-child(4) {
+  background-image: linear-gradient(green, white);
+  transform: rotateY(270deg) translateX(50%) rotateY(90deg);
+  height: 100%;
+}
+.flipBox_box > div:nth-child(5) {
+  background-color: green;
+  transform: rotateX(90deg) translateY(-0.5em);
+  transform-origin: top;
+  height: 1em;
+}
+.flipBox_box > div:nth-child(5)::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  -webkit-clip-path: polygon(12.5% 56.25%, 25% 43.75%, 37.5% 56.25%, 75% 18.75%, 87.5% 31.25%, 37.5% 81.25%, 12.5% 56.25%);
+          clip-path: polygon(12.5% 56.25%, 25% 43.75%, 37.5% 56.25%, 75% 18.75%, 87.5% 31.25%, 37.5% 81.25%, 12.5% 56.25%);
+}
+.flipBox_box > div:nth-child(6) {
+  bottom: 0;
+  background-color: white;
+  transform: rotateX(90deg) translateY(0.5em);
+  transform-origin: bottom;
+  height: 1em;
+}
+.flipBox_shadow {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1em;
+  height: 1em;
+  transform: translateY(-50%) translateZ(-1px);
+  background-color: #0007;
+  filter: blur(0.2em);
+}
+
+.creditos {
+  text-align: center;
+}
+
+.obs {
+  background-color: #f8d7da; /* Cor de fundo vermelha claro para indicar um alerta */
+  border: 1px solid #f5c6cb; /* Borda vermelha para destacar a área do alerta */
+  padding: 15px; /* Espaçamento interno para melhorar a legibilidade */
+  margin: 20px 0; /* Margem para separar o alerta de outros elementos */
+  border-radius: 5px; /* Cantos arredondados para uma aparência mais suave */
+}
+
+.obs h4 {
+  margin-top: 0; /* Remover a margem superior padrão do título */
+  color: #721c24; /* Cor do texto para contrastar com o fundo */
+  text-align: center;
+}
+
+
+@-webkit-keyframes flipBox1 {
+  0%, 100% {
+    transform: rotateX(90deg);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  50% {
+    transform: rotateX(90deg) translateY(2em);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+}
+@keyframes flipBox1 {
+  0%, 100% {
+    transform: rotateX(90deg);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  50% {
+    transform: rotateX(90deg) translateY(2em);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+}
+@-webkit-keyframes flipBox2 {
+  from {
+    transform: translate(-50%, -50%) rotateX(0deg) rotateY(180deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotateX(-180deg) rotateY(0deg);
+  }
+}
+@keyframes flipBox2 {
+  from {
+    transform: translate(-50%, -50%) rotateX(0deg) rotateY(180deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotateX(-180deg) rotateY(0deg);
+  }
+}
+@-webkit-keyframes flipBox3 {
+  0%, 100% {
+    transform: translateY(-50%) translateZ(-1px) scale(1);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  50% {
+    transform: translateY(-50%) translateZ(-1px) scale(1.5);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+}
+@keyframes flipBox3 {
+  0%, 100% {
+    transform: translateY(-50%) translateZ(-1px) scale(1);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  50% {
+    transform: translateY(-50%) translateZ(-1px) scale(1.5);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+}
+@-webkit-keyframes flipBox4 {
+  0%, 100% {
+    transform: rotateX(90deg);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  50% {
+    transform: rotateX(90deg) translateY(2em);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+}
+@keyframes flipBox4 {
+  0%, 100% {
+    transform: rotateX(90deg);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  50% {
+    transform: rotateX(90deg) translateY(2em);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+}
+@-webkit-keyframes flipBox5 {
+  from {
+    transform: translate(-50%, -50%) rotateX(-180deg) rotateY(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotateX(-360deg) rotateY(180deg);
+  }
+}
+@keyframes flipBox5 {
+  from {
+    transform: translate(-50%, -50%) rotateX(-180deg) rotateY(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotateX(-360deg) rotateY(180deg);
+  }
+}
+@-webkit-keyframes flipBox6 {
+  0%, 100% {
+    transform: translateY(-50%) translateZ(-1px) scale(1);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  50% {
+    transform: translateY(-50%) translateZ(-1px) scale(1.5);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+}
+@keyframes flipBox6 {
+  0%, 100% {
+    transform: translateY(-50%) translateZ(-1px) scale(1);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  50% {
+    transform: translateY(-50%) translateZ(-1px) scale(1.5);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+}
+
+@media (prefers-reduced-motion) {
+  .flipBox_boxOuter,
+.flipBox_box,
+.flipBox_shadow {
+    -webkit-animation-play-state: paused !important;
+            animation-play-state: paused !important;
+  }
+
+  .flipBox_boxOuter {
+    transition: none;
+  }
+}
+
+.custom-alert {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: #fff;
+  z-index: 9999;
+}
+
+.success {
+  background-color: #5543ca; /* Cor verde para sucesso */
+}
+
+.error {
+  background-color: #f44336; /* Cor vermelha para erro */
+}
+
+::selection {
+  background: transparent;
+}
+
+/* Estilos para telas pequenas (celulares) */
+@media only screen and (max-width: 767px) {
+  body {
+    font-size: 14px; /* Altere o tamanho da fonte conforme necessário */
+  }
+
+  .container {
+    max-width: 100%; /* Faz com que a largura máxima seja 100% da largura da tela */
+    padding: 10px; /* Adapte o preenchimento conforme necessário para telas menores */
+  }
+
+  .ssk{
+    max-width: 68%;
+    margin-left: 15%;
+    font-size: 11px;
+  }
+  .checkboxes label{
+    margin-left: 15%;
+    text-wrap: nowrap;
+  }
+
+  .check label{
+    margin-left: 15%;
+    text-wrap: nowrap;
+  }
+
+  .checkbox-container.middle label{
+    text-wrap:nowrap;
+  }
+
+  nav {
+    flex-direction: column; /* Empilha os itens de navegação verticalmente em telas menores */
+  }
+
+  nav a {
+    margin: 5px 0; /* Espaçamento entre os itens de navegação */
+  }
+}
+
+h4{
+  text-align: center;
+}
+
+.metod {
+  border: 2px solid #3498db; /* Uma borda sólida de 2 pixels azul */
+  border-radius: 10px; /* Borda arredondada com raio de 10 pixels */
+}
+
+textarea {
+  resize: none;
+  border: none;
+  padding: 10px;
+  background-color: #f4f4f4;
+  color: #333;
+  outline: none;
+  font-size: 16px;
+  width: calc(100% - 20px); /* Ajustando a largura para levar em conta o padding */
+  margin-bottom: 10px;
+}
+
+textarea:focus {
+  border: 1px solid #8257e5;
+}
+
+#submitQuestion {
+  background-color: #8257e5;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#submitQuestion:hover {
+  background-color: #6c42c1;
+}
+
+/* Personalização da seleção de texto */
+::selection {
+  background-color: #d0eaff; /* Azul fraquinho */
+  color: #333; /* Cor do texto */
+}

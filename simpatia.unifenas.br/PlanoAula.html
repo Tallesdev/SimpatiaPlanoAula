@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerador de Plano de Aula - SIMPATIA</title>
+    <link rel="stylesheet" href="stylePlano.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style type="text/css" id="operaUserStyle"></style>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="header-content">
+        <a href="/index.html" class="logo-link">
+          <img
+            src="C:\Users\talle\Desktop\aaa\simpatia.unifenas.br\simpatia.unifenas.br\logos\LogoSimpatia.png.png"
+            alt="Logo SIMPATIA ia"
+            class="logo-simpatia"
+          />
+        </a>
+        <nav class="header-nav">
+          <a href="#" class="nav-link">
+            <span>Módulos de IA</span>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 6L8 10L12 6"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+          </a>
+          <a href="#" class="nav-link">Sobre o Projeto</a>
+        </nav>
+        <a href="#" class="cta-button">
+          <img src="C:\Users\talle\Desktop\aaa\simpatia.unifenas.br\simpatia.unifenas.br\logos\LogoUnifenasRoxa.png" class="logo-unifenas" />
+          <span>Conheça a Unifenas</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="main-container">
+      <div class="info-panel">
+        <h2>Informações do Plano de Aula</h2>
+        <form id="plan-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nivel-ensino">Nível de Ensino</label>
+              <select id="nivel-ensino">
+                <option value="Ensino Fundamental">Ensino Fundamental</option>
+                <option value="Ensino Médio">Ensino Médio</option>
+                <option value="Ensino Superior">Ensino Superior</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="formato-aula">Formato da Aula</label>
+              <select id="formato-aula">
+                <option value="Presencial">Presencial</option>
+                <option value="EAD">EAD</option>
+                <option value="Híbrida">Híbrida</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nome-curso">Nome do Curso</label>
+              <input type="text" id="nome-curso" />
+            </div>
+            <div class="form-group">
+              <label for="nome-disciplina">Nome da Disciplina</label>
+              <input type="text" id="nome-disciplina" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="horas-totais">Horas Totais</label>
+              <input type="number" id="horas-totais" />
+            </div>
+            <div class="form-group">
+              <label for="semanas">Semanas</label>
+              <input type="number" id="semanas" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="num-referencias">Nº de Referências</label>
+              <input type="number" id="num-referencias" />
+            </div>
+            <div class="form-group">
+              <label for="num-referencias-comp">Nº de Referências Complementares</label>
+              <input type="number" id="num-referencias-comp" />
+            </div>
+            <div class="form-group half-width">
+            <label for="semestre">Semestre:</label>
+            <input
+              type="text"
+              id="semestre"
+              value=""
+              placeholder="Ex: 1º Semestre"
+            />
+        </div>
+        <div class="form-group half-width">
+            <label for="ano">Ano:</label>
+            <input
+              type="number"
+              id="ano"
+              value=""
+              placeholder="Ex: 2025"
+            />
+        </div>
+          </div>
+          <div class="form-section">
+            <h3>Métodos de Avaliação</h3>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="avaliacao" value="Prova Discursiva" /> Prova Discursiva</label>
+              <label><input type="checkbox" name="avaliacao" value="Prova Prática" /> Prova Prática</label>
+              <label><input type="checkbox" name="avaliacao" value="Prova de Múltipla Escolha" /> Prova de Múltipla Escolha</label>
+              <label><input type="checkbox" name="avaliacao" value="Trabalhos de Pesquisa" /> Trabalhos de Pesquisa</label>
+              <label><input type="checkbox" name="avaliacao" value="Prova Oral" /> Prova Oral</label>
+            </div>
+            <label for="outros-avaliacao">Outros métodos de avaliação:</label>
+            <input type="text" id="outros-avaliacao" />
+          </div>
+          <div class="form-section">
+            <h3>Metodologias</h3>
+            <div class="checkbox-group">
+              <label><input type="checkbox" name="metodologia" value="Exposição Dialogada" /> Exposição Dialogada</label>
+              <label><input type="checkbox" name="metodologia" value="Estudo de Caso" /> Estudo de Caso</label>
+              <label><input type="checkbox" name="metodologia" value="Trabalho de Grupo" /> Trabalho de Grupo</label>
+              <label><input type="checkbox" name="metodologia" value="Seminário" /> Seminário</label>
+              <label><input type="checkbox" name="metodologia" value="Debate" /> Debate</label>
+              <label><input type="checkbox" name="metodologia" value="Painel" /> Painel</label>
+              <label><input type="checkbox" name="metodologia" value="TBL" /> TBL</label>
+              <label><input type="checkbox" name="metodologia" value="Fórum/Chat" /> Fórum/Chat</label>
+              <label><input type="checkbox" name="metodologia" value="PBL" /> PBL</label>
+              <label><input type="checkbox" name="metodologia" value="PBLe" /> PBLe</label>
+              <label><input type="checkbox" name="metodologia" value="Aula Invertida" /> Aula Invertida</label>
+              <label><input type="checkbox" name="metodologia" value="Tempestade Cerebral" /> Tempestade Cerebral</label>
+              <label><input type="checkbox" name="metodologia" value="Mapa Conceitual" /> Mapa Conceitual</label>
+              <label><input type="checkbox" name="metodologia" value="Dramatização" /> Dramatização</label>
+            </div>
+          </div>
+          <div class="form-section">
+          <h3>Recursos Auxiliares</h3>
+          <div class="checkbox-group">
+              <label><input type="checkbox" name="recursos" value="Computador" /> Computador</label>
+              <label><input type="checkbox" name="recursos" value="Videos" /> Videos</label>
+              <label><input type="checkbox" name="recursos" value="AVA" /> AVA*</label>
+              <label><input type="checkbox" name="recursos" value="Atividades Clinicas" /> Atividades Clínicas</label>
+              <label><input type="checkbox" name="recursos" value="Lousa" /> Lousa</label>
+              <label><input type="checkbox" name="recursos" value="Internet" /> Internet</label>
+              <label><input type="checkbox" name="recursos" value="Laboratório" /> Laboratório</label>
+              <label><input type="checkbox" name="recursos" value="Video Conferencia" /> Video Conferência</label>
+              <label><input type="checkbox" name="recursos" value="Prancheta Digitalizadora" /> Prancheta Digitalizadora</label>
+              <label><input type="checkbox" name="recursos" value="Projetor Multimidia" /> Projetor Multimidia</label>
+              <label><input type="checkbox" name="recursos" value="Albuns Seriados" /> Albuns Seriados</label>
+              <label><input type="checkbox" name="recursos" value="Slides" /> Slides</label>
+              <label><input type="checkbox" name="recursos" value="Manequins" /> Manequins</label>
+              <label><input type="checkbox" name="recursos" value="Lousa Eletrônica" /> Lousa Eletrônica</label>
+          </div>
+          <label for="outros-recursos">Outros recursos:</label>
+          <input type="text" id="outros-recursos" />
+      </div>
+          <button type="button" id="generate-btn">Gerar Confirmação</button>
+        </form>
+      </div>
+
+      <div class="dual-panel-container">
+        <div class="chat-panel">
+          <div class="chat-messages" id="chat-messages">
+            <div class="message bot-message">
+              Olá! Preencha as informações do plano de aula acima para começar.
+            </div>
+          </div>
+          <div class="chat-input-area">
+            <input
+              type="text"
+              id="user-input"
+              placeholder="Digite sua pergunta..."
+            />
+            <button id="send-btn" aria-label="Enviar mensagem">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M22 2L11 13"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+                <path
+                  d="M22 2L15 22L11 13L2 9L22 2Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="plan-panel">
+          <div class="plan-output-container" id="plan-output">
+            <div class="placeholder-text">
+              <h2>Seu plano de aula aparecerá aqui...</h2>
+              <p>
+                Use o chat ao lado para interagir e gerar o plano.
+              </p>
+            </div>
+          </div>
+          <button id="download-pdf-btn" style="display: none">Baixar PDF</button>
+        </div>
+      </div>
+    </main>
+
+    <script src="chatPlano.js"></script>
+  </body>
+</html>

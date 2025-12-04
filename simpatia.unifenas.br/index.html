@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
+    <title>
+      SIMPATIA (Sistema de Mídias Pedagógicas para Atividades com Inteligência
+      Artificial)
+    </title>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-S703Y659N7"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-S703Y659N7");
+    </script>
+  </head>
+
+  <body>
+    <!--    <div class="corsk">
+        <header>
+            <img src="img/logo_unifenas.png" alt="Logo">
+            <h1>Gerador de Plano de Aula</h1>
+        </header>
+
+        <nav class="no-bootstrap">
+            <form action="https://chat.openai.com/" method="get" target="_blank" rel="noopener noreferrer">
+                <button class="close custom-btn" onclick="document.getElementById('submit-btn').click()">Acessar Chat GPT</button>
+            </form>
+            <form action="comoUsar.html" method="get" rel="noopener noreferrer">
+                <button class="close custom-btn" onclick="document.getElementById('submit-btn').click()">Como usar o Chat GPT</button>
+            </form>
+            <form action="correcao.html" method="get" rel="noopener noreferrer">
+                <button class="close custom-btn" onclick="document.getElementById('submit-btn').click()">Correção de provas</button>
+            </form>
+            <form action="creditos.html" method="get" rel="noopener noreferrer">
+                <button class="close custom-btn" onclick="document.getElementById('submit-btn').click()">Créditos</button>
+            </form>
+        </nav>
+    </div>
+-->
+    <div class="corsk">
+      <header>
+        <img src="img/logo_unifenas.png" alt="Logo" />
+        <!-- Exibir o email do usuário logado -->
+      </header>
+      <nav class="no-bootstrap">
+        <form action="correcao.html" method="get" rel="noopener noreferrer">
+          <button
+            class="close custom-btn"
+            onclick="document.getElementById('submit-btn').click()"
+          >
+            Correção de Questões Descritivas
+          </button>
+        </form>
+        <form
+          action="https://chat.openai.com/"
+          method="get"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <button
+            class="close custom-btn"
+            onclick="document.getElementById('submit-btn').click()"
+          >
+            Acessar Chat GPT
+          </button>
+        </form>
+
+        <form action="comoUsar.html" method="get" rel="noopener noreferrer">
+          <button
+            class="close custom-btn"
+            onclick="document.getElementById('submit-btn').click()"
+          >
+            Como usar o Chat GPT
+          </button>
+        </form>
+
+        <form action="creditos.html" method="get" rel="noopener noreferrer">
+          <button
+            class="close custom-btn"
+            onclick="document.getElementById('submit-btn').click()"
+          >
+            Créditos
+          </button>
+        </form>
+      </nav>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+    <script src="/login/firebase-init.js"></script>
+
+    <script>
+      // Função para verificar o estado de autenticação
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          // Se o usuário estiver logado, exibe seu email e o botão de deslogar
+          document.getElementById("user-email").innerText = user.email;
+          document.querySelector(".corsk header button").style.display =
+            "block";
+        } else {
+          // Se não estiver logado, esconde o email e o botão de deslogar
+          document.getElementById("user-email").innerText = "";
+          document.querySelector(".corsk header button").style.display = "none";
+          // Redireciona para a página de login se não estiver autenticado
+          window.location.href = "/login/login.html";
+        }
+      });
+
+      // Função para deslogar
+      function logout() {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            // Redireciona para a página de login após deslogar
+            window.location.href = "/login/login.html";
+          })
+          .catch((error) => {
+            console.error("Erro ao deslogar:", error);
+          });
+      }
+    </script>
+
+    <div class="body1">
+      <div class="container">
+        <div class="text">SIMPATIA</div>
+        <div class="text" style="font-size: 16px">
+          Sistema de Mídias Pedagógicas para Atividades com Inteligência
+          Artificial
+        </div>
+        <form id="planForm">
+          <!-- Dropdowns Nivel de ensino e Forma de Ensino -->
+          <!-- Nível -->
+          <div class="drop">
+            <label for="opcoes">Escolha uma opção:</label>
+            <select id="opcoes" onchange="mostrarOutro()">
+              <option value="fundamental">Ensino Fundamental</option>
+              <option value="médio">Ensino Médio</option>
+              <option value="superior" selected>Ensino Superior</option>
+              <option value="outro">Outro</option>
+            </select>
+            <input
+              type="text"
+              id="outroInput"
+              placeholder="Digite outro valor"
+            />
+          </div>
+          <!-- Forma -->
+          <div class="drop">
+            <select id="opcao" onchange="mostrarDrop()">
+              <option value="presencial" selected>Presencial</option>
+              <option value="ead">EaD</option>
+              <option value="híbrida">Híbrida</option>
+            </select>
+          </div>
+          <br />
+          <!-- Formulário Introdutório -->
+          <!-- Coluna 1 -->
+          <div class="form-row">
+            <div class="input-data">
+              <input type="text" id="subject1" name="subject1" required />
+              <div class="underline"></div>
+              <label for="subject">Nome Do Curso</label>
+            </div>
+            <div class="input-data">
+              <input type="text" id="subject" name="subject" required />
+              <div class="underline"></div>
+              <label for="subject">Nome Da Disciplina</label>
+            </div>
+          </div>
+          <!-- Coluna 2 -->
+          <div class="form-row">
+            <div class="input-data" title="Ex: 60 horas">
+              <input type="text" id="horas" name="subject" required />
+              <div class="underline"></div>
+              <label for="horas">Horas totais</label>
+            </div>
+            <div class="input-data" title="Ex: 13">
+              <input type="text" id="semanas" name="subject" required />
+              <div class="underline"></div>
+              <label for="semanas">Semanas</label>
+            </div>
+          </div>
+          <!-- Coluna 3 -->
+          <div class="form-row">
+            <div class="input-data" title="Ex: 5">
+              <input type="text" id="ref1" name="subject" required />
+              <div class="underline"></div>
+              <label for="subject">Número de referências</label>
+            </div>
+            <div class="input-data" title="Ex: 2">
+              <input type="text" id="ref2" name="subject" required />
+              <div class="underline"></div>
+              <label for="subject">Nº de referências complementares</label>
+            </div>
+          </div>
+
+          <br />
+          <br />
+          <h4>Método de Avaliação</h4>
+
+          <div class="ssk">
+            <!-- Coluna 1 metodos de avaliação -->
+            <div class="check">
+              <label
+                for="discursivaCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="discursivaCheckbox"
+                  name="sectionAvaliacao"
+                  value=" prova discursiva"
+                />
+                <span> Prova Discursiva </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label
+                for="multiplaEscolhaCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="multiplaEscolhaCheckbox"
+                  name="sectionAvaliacao"
+                  value=" prova de múltipla escolha"
+                />
+                <span> Prova de Múltipla Escolha </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label for="oralCheckbox" class="flipBox" aria-label="Checkbox 1">
+                <input
+                  type="checkbox"
+                  id="oralCheckbox"
+                  name="sectionAvaliacao"
+                  value=" prova oral"
+                />
+                <span> Prova Oral </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+            </div>
+            <!-- Coluna 2 métodos de avaliação-->
+            <div class="checkbox-container middle">
+              <label
+                for="praticaCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="praticaCheckbox"
+                  name="sectionAvaliacao"
+                  value=" prova prática"
+                />
+                <span> Prova Prática </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label
+                for="pesquisaCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="pesquisaCheckbox"
+                  name="sectionAvaliacao"
+                  value=" trabalho de pesquisa"
+                />
+                <span> Trabalhos de Pesquisa </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+            </div>
+          </div>
+          <!-- Coluna 4 formulário introdutório-->
+          <div class="form-row">
+            <div
+              class="input-data"
+              title="Ex: provas teórica, trabalhos práticos"
+            >
+              <input type="text" id="avaliacao" name="subject" required />
+              <div class="underline"></div>
+              <label for="subject">Outros métodos de avaliação</label>
+            </div>
+          </div>
+          <br />
+          <!-- Metodologias de ensino -->
+          <div class="metod">
+            <br />
+            <br />
+            <h4>Quais metodologias serão utilizadas:</h4>
+            <div class="ssk">
+              <!-- Coluna 1 metodos de avaliação -->
+              <div class="checkb">
+                <label
+                  for="expCheckbox"
+                  class="flipBox"
+                  aria-label="Checkbox 1"
+                >
+                  <input
+                    type="checkbox"
+                    id="expCheckbox"
+                    name="sectionMet"
+                    value=" exposição dialogada"
+                  />
+                  <span> Exposição Dialogada </span>
+                  <div class="flipBox_boxOuter">
+                    <div class="flipBox_box">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="flipBox_shadow"></div>
+                </label>
+
+                <label
+                  for="trabGrupCheckbox"
+                  class="flipBox"
+                  aria-label="Checkbox 1"
+                >
+                  <input
+                    type="checkbox"
+                    id="trabGrupCheckbox"
+                    name="sectionMet"
+                    value=" trabalho de grupo"
+                  />
+                  <span> Trabalho de Grupo </span>
+                  <div class="flipBox_boxOuter">
+                    <div class="flipBox_box">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="flipBox_shadow"></div>
+                </label>
+
+                <label
+                  for="debateCheckbox"
+                  class="flipBox"
+                  aria-label="Checkbox 1"
+                >
+                  <input
+                    type="checkbox"
+                    id="debateCheckbox"
+                    name="sectionMet"
+                    value=" debate"
+                  />
+                  <span> Debate </span>
+                  <div class="flipBox_boxOuter">
+                    <div class="flipBox_box">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="flipBox_shadow"></div>
+                </label>
+
+                <label
+                  for="tblCheckbox"
+                  class="flipBox"
+                  aria-label="Checkbox 1"
+                >
+                  <input
+                    type="checkbox"
+                    id="tblCheckbox"
+                    name="sectionMet"
+                    value=" TBL"
+                  />
+                  <span> TBL </span>
+                  <div class="flipBox_boxOuter">
+                    <div class="flipBox_box">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="flipBox_shadow"></div>
+                </label>
+
+                <label
+                  for="pblCheckbox"
+                  class="flipBox"
+                  aria-label="Checkbox 1"
+                >
+                  <input
+                    type="checkbox"
+                    id="pblCheckbox"
+                    name="sectionMet"
+                    value=" PBL"
+                  />
+                  <span> PBL </span>
+                  <div class="flipBox_boxOuter">
+                    <div class="flipBox_box">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="flipBox_shadow"></div>
+                </label>
+
+                <label
+                  for="invertidaCheckbox"
+                  class="flipBox"
+                  aria-label="Checkbox 1"
+                >
+                  <input
+                    type="checkbox"
+                    id="invertidaCheckbox"
+                    name="sectionMet"
+                    value=" aula invertida"
+                  />
+                  <span> Aula Invertida </span>
+                  <div class="flipBox_boxOuter">
+                    <div class="flipBox_box">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="flipBox_shadow"></div>
+                </label>
+
+                <label
+                  for="mapaCheckbox"
+                  class="flipBox"
+                  aria-label="Checkbox 1"
+                >
+                  <input
+                    type="checkbox"
+                    id="mapaCheckbox"
+                    name="sectionMet"
+                    value=" mapa conceitual"
+                  />
+                  <span> Mapa Conceitual </span>
+                  <div class="flipBox_boxOuter">
+                    <div class="flipBox_box">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="flipBox_shadow"></div>
+                </label>
+              </div>
+              <!-- Coluna 2 métodos de avaliação-->
+              <div class="checkbox-container middle">
+                <label
+                  for="casoCheckbox"
+                  class="flipBox"
+                  aria-label="Checkbox 1"
+                >
+                  <input
+                    type="checkbox"
+                    id="casoCheckbox"
+                    name="sectionMet"
+                    value=" estudo de caso"
+                  />
+                  <span> Estudo de Caso </span>
+                  <div class="flipBox_boxOuter">
+                    <div class="flipBox_box">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="flipBox_shadow"></div>
+                </label>
+
+                <label
+                  for="seminarioCheckbox"
+                  class="flipBox"
+                  aria-label="Checkbox 1"
+                >
+                  <input
+                    type="checkbox"
+                    id="seminarioCheckbox"
+                    name="sectionMet"
+                    value=" seminário"
+                  />
+                  <span> Seminário </span>
+                  <div class="flipBox_boxOuter">
+                    <div class="flipBox_box">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="flipBox_shadow"></div>
+                </label>
+
+                <label
+                  for="painelCheckbox"
+                  class="flipBox"
+                  aria-label="Checkbox 1"
+                >
+                  <input
+                    type="checkbox"
+                    id="painelCheckbox"
+                    name="sectionMet"
+                    value=" painel"
+                  />
+                  <span> Painel </span>
+                  <div class="flipBox_boxOuter">
+                    <div class="flipBox_box">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="flipBox_shadow"></div>
+                </label>
+
+                <label
+                  for="forumCheckbox"
+                  class="flipBox"
+                  aria-label="Checkbox 1"
+                >
+                  <input
+                    type="checkbox"
+                    id="forumCheckbox"
+                    name="sectionMet"
+                    value=" fórum/chat"
+                  />
+                  <span> Fórum/Chat </span>
+                  <div class="flipBox_boxOuter">
+                    <div class="flipBox_box">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="flipBox_shadow"></div>
+                </label>
+
+                <label
+                  for="pbleCheckbox"
+                  class="flipBox"
+                  aria-label="Checkbox 1"
+                >
+                  <input
+                    type="checkbox"
+                    id="pbleCheckbox"
+                    name="sectionMet"
+                    value=" PBLe"
+                  />
+                  <span> PBLe </span>
+                  <div class="flipBox_boxOuter">
+                    <div class="flipBox_box">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="flipBox_shadow"></div>
+                </label>
+
+                <label
+                  for="braisCheckbox"
+                  class="flipBox"
+                  aria-label="Checkbox 1"
+                >
+                  <input
+                    type="checkbox"
+                    id="braisCheckbox"
+                    name="sectionMet"
+                    value=" tempestade cerebral (brainstorming)"
+                  />
+                  <span> Tempestade Cerebral </span>
+                  <div class="flipBox_boxOuter">
+                    <div class="flipBox_box">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="flipBox_shadow"></div>
+                </label>
+
+                <label
+                  for="dramatizacaoCheckbox"
+                  class="flipBox"
+                  aria-label="Checkbox 1"
+                >
+                  <input
+                    type="checkbox"
+                    id="dramatizacaoCheckbox"
+                    name="sectionMet"
+                    value=" dramatização/role play"
+                  />
+                  <span> Dramatização </span>
+                  <div class="flipBox_boxOuter">
+                    <div class="flipBox_box">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                  <div class="flipBox_shadow"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <br />
+          <div class="obs">
+            <h4>
+              É recomendável gerar os tópicos específicos somente após criar o
+              plano de aula completo!
+            </h4>
+          </div>
+          <!-- Aqui são os checkbox dos métodos específicos -->
+          <div class="ssk">
+            <!-- Coluna 1 -->
+            <div class="checkboxes">
+              <label
+                for="introductionCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="introductionCheckbox"
+                  name="section"
+                  value="introduction"
+                />
+                <span> Introdução </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label
+                for="activityInitialCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="activityInitialCheckbox"
+                  name="section"
+                  value="activityInitial"
+                />
+                <span> Atividade Inicial </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label
+                for="assessmentActivityCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="assessmentActivityCheckbox"
+                  name="section"
+                  value="assessmentActivity"
+                />
+                <span> Atividade de Avaliação </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label
+                for="practicalActivityCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="practicalActivityCheckbox"
+                  name="section"
+                  value="practicalActivity"
+                />
+                <span> Atividade Prática </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label
+                for="objectivesCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="objectivesCheckbox"
+                  name="section"
+                  value="objectives"
+                />
+                <span> Objetivos </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label
+                for="objectivesEspCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="objectivesEspCheckbox"
+                  name="section"
+                  value="objectivesEsp"
+                />
+                <span> Objetivos Específicos </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label
+                for="ementaCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="ementaCheckbox"
+                  name="section"
+                  value="ementa"
+                />
+                <span> Ementa </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label
+                for="metodolodiaCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="metodolodiaCheckbox"
+                  name="section"
+                  value="metodologia"
+                />
+                <span> Metodologia </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+            </div>
+            <!-- Coluna 2 -->
+            <div class="checkbox-container middle">
+              <label
+                for="projetoCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="projetoCheckbox"
+                  name="section"
+                  value="projeto"
+                />
+                <span> Projeto </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label
+                for="groupDiscussionCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="groupDiscussionCheckbox"
+                  name="section"
+                  value="groupDiscussion"
+                />
+                <span> Discussão em Grupo </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label
+                for="homeworkCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="homeworkCheckbox"
+                  name="section"
+                  value="homework"
+                />
+                <span> Tarefas de Casa </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label
+                for="recAuxCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="recAuxCheckbox"
+                  name="section"
+                  value="recAux"
+                />
+                <span> Recursos Auxiliares </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label
+                for="developmentCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="developmentCheckbox"
+                  name="section"
+                  value="development"
+                />
+                <span> Desenvolvimento </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label
+                for="synthesisCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="synthesisCheckbox"
+                  name="section"
+                  value="synthesis"
+                />
+                <span> Síntese </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label for="referencia" class="flipBox" aria-label="Checkbox 1">
+                <input
+                  type="checkbox"
+                  id="referencia"
+                  name="section"
+                  value="referencia"
+                />
+                <span> Referências </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+
+              <label
+                for="feedbackCheckbox"
+                class="flipBox"
+                aria-label="Checkbox 1"
+              >
+                <input
+                  type="checkbox"
+                  id="feedbackCheckbox"
+                  name="section"
+                  value="feedback"
+                />
+                <span> Feedback </span>
+                <div class="flipBox_boxOuter">
+                  <div class="flipBox_box">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div class="flipBox_shadow"></div>
+              </label>
+            </div>
+          </div>
+        </form>
+        <!-- Botões gerar tópicos específicos e gerar plano de aula -->
+        <nav>
+          <form id="planForm" target="_blank" rel="noopener noreferrer">
+            <button
+              class="close custom-btn"
+              type="button"
+              onclick="generateSpecificTopic()"
+            >
+              Gerar Tópico Específico
+            </button>
+          </form>
+          <a href="PlanoAula.html">
+            <button
+              class="close custom-btn"
+              type="button"
+              onclick="salvarDadosEIrParaProximaPagina()"
+            >
+              Gerar Plano de aula
+            </button>
+          </a>
+        </nav>
+        <br />
+        <br />
+        <div id="output"></div>
+        <!-- Botão de copiar texto -->
+        <nav>
+          <button
+            class="close custom-btn btnCopi hidden"
+            type="button"
+            onclick="CopyTexto('output')"
+          >
+            Copiar
+          </button>
+          <div id="alert" class="custom-alert"></div>
+        </nav>
+      </div>
+    </div>
+    <footer>
+      <p>
+        ATEX - © 2025 SIMPATIA - Sistema de Mídias Pedagógicas para Atividades
+        com Inteligência Artificial
+      </p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

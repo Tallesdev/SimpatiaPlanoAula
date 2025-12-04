@@ -1,0 +1,424 @@
+/* --- DESIGN SYSTEM: VARIÁVEIS GLOBAIS (TEMA CLARO) --- */
+:root {
+  /* Cores */
+  --azul-principal: #0d6fff;
+  --roxo-principal: #370199;
+  --roxo-hover: #4a16b0;
+  --fundo-principal: #f8f8fc;
+  --fundo-painel: #fefeff;
+  --fundo-componente: #e4e4f2;
+  --cor-borda: #e4e4f2;
+  --texto-principal: #0c0c12;
+  --texto-secundario: #4c4b67;
+  --texto-branco: #fefeff;
+  --cinza-claro: #d1d1e4;
+
+  /* Fontes */
+  --font-family: 'Inter', sans-serif;
+
+  /* Sombras e Transições */
+  --sombra-painel: 0px 4px 16px rgba(0, 0, 0, 0.06);
+  --transicao-rapida: all 0.2s ease-in-out;
+}
+
+/* --- ESTILOS GLOBAIS E RESET --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--fundo-principal);
+  color: var(--texto-principal);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* --- HEADER REFINADO E REESTRUTURADO --- */
+.app-header {
+  background-color: var(--fundo-painel);
+  border-bottom: 1px solid var(--cor-borda);
+  padding: 0 24px;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1232px;
+  margin: 0 auto;
+  height: 68px;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+}
+.logo-simpatia {
+  height: 30px;
+}
+
+.header-nav {
+  display: flex;
+  gap: 32px;
+}
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--texto-secundario);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transicao-rapida);
+}
+.nav-link:hover {
+  color: var(--texto-principal);
+}
+
+.cta-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background-color: var(--fundo-painel);
+  border: 1.5px solid var(--roxo-principal);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--roxo-principal);
+  font-weight: 600;
+  transition: var(--transicao-rapida);
+}
+.cta-button:hover {
+  background-color: #f5f2ff;
+}
+.cta-button svg {
+  color: var(--roxo-principal);
+}
+
+/* --- LAYOUT PRINCIPAL (DOIS PAINÉIS) --- */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 24px;
+  padding: 24px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Container que envolve os dois painéis inferiores */
+.dual-panel-container {
+  display: flex;
+  flex-grow: 1;
+  gap: 24px;
+}
+
+/* --- ESTILOS DO NOVO PAINEL DE INFORMAÇÕES (TOPO) --- */
+.info-panel {
+  background-color: var(--fundo-painel);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--sombra-painel);
+  border: 1px solid var(--cor-borda);
+  flex-shrink: 0;
+}
+
+.info-panel h2 {
+  margin-bottom: 24px;
+}
+
+#plan-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--texto-principal);
+}
+
+.form-group input,
+.form-group select {
+  padding: 12px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--texto-principal);
+  background-color: var(--fundo-componente);
+  transition: var(--transicao-rapida);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--roxo-principal);
+  box-shadow: 0 0 0 2px var(--roxo-principal);
+}
+
+.form-section {
+  border-top: 1px solid var(--cor-borda);
+  padding-top: 24px;
+}
+
+.form-section h3 {
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 400;
+  color: var(--texto-secundario);
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  appearance: none;
+  background-color: var(--fundo-componente);
+  border: 1px solid var(--cor-borda);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transicao-rapida);
+}
+
+.checkbox-group input[type="checkbox"]:checked {
+  background-color: var(--roxo-principal);
+  border-color: var(--roxo-principal);
+}
+
+.checkbox-group input[type="checkbox"]:checked::after {
+  content: '✔';
+  font-size: 14px;
+  color: var(--texto-branco);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#generate-btn {
+  background-color: var(--roxo-principal);
+  color: var(--texto-branco);
+  border: none;
+  border-radius: 8px;
+  padding: 16px 24px;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: var(--font-family);
+  cursor: pointer;
+  margin-top: 16px;
+  transition: var(--transicao-rapida);
+}
+
+#generate-btn:hover {
+  background-color: var(--roxo-hover);
+}
+
+/* --- PAINEL DO CHAT (ESQUERDA) E PRÉ-VISUALIZAÇÃO (DIREITA) --- */
+.chat-panel,
+.plan-panel {
+  background-color: var(--fundo-painel);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  overflow: hidden;
+  box-shadow: var(--sombra-painel);
+  border: 1px solid var(--cor-borda);
+  max-height: 55rem;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 0 12px 0 0;
+}
+.message {
+  padding: 12px 16px;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  max-width: 85%;
+  line-height: 1.6;
+  font-size: 16px;
+  font-weight: 500;
+}
+.bot-message {
+  background-color: var(--fundo-componente);
+  color: var(--texto-principal);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.user-message {
+  background-color: var(--azul-principal);
+  color: var(--texto-branco);
+  align-self: flex-end;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+.chat-input-area {
+  display: flex;
+  gap: 12px;
+  padding-top: 16px;
+  margin-top: 16px;
+  border-top: 1px solid var(--cor-borda);
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 8px;
+  transition: var(--transicao-rapida);
+}
+.chat-input-area:focus-within {
+  box-shadow: 0 0 0 2px var(--roxo-principal);
+}
+#user-input {
+  flex-grow: 1;
+  border: none;
+  background-color: transparent;
+  color: var(--texto-principal);
+  padding: 12px 4px;
+  font-size: 16px;
+  font-family: var(--font-family);
+  outline: none;
+}
+#send-btn {
+  background-color: var(--roxo-principal);
+  color: var(--texto-branco);
+  border: none;
+  border-radius: 8px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: var(--transicao-rapida);
+}
+#send-btn:hover {
+  background-color: var(--roxo-hover);
+}
+
+.plan-output-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 12px;
+  line-height: 1.7;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--texto-secundario);
+}
+.plan-output-container b {
+  color: var(--texto-principal);
+  font-weight: 600;
+  display: block;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+.plan-output-container ul {
+  list-style: none;
+}
+.plan-output-container li {
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+.plan-output-container li::before {
+  content: '•';
+  color: var(--roxo-principal);
+  font-weight: bold;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+#download-pdf-btn {
+  background-color: var(--roxo-principal);
+  color: var(--texto-branco);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: var(--font-family);
+  cursor: pointer;
+  margin-top: 24px;
+  align-self: flex-end;
+  flex-shrink: 0;
+  transition: var(--transicao-rapida);
+}
+#download-pdf-btn:hover {
+  background-color: var(--roxo-hover);
+}
+
+/* Estilização da barra de rolagem (Sutil) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #d0d0e0;
+  border-radius: 10px;
+  border: 2px solid var(--fundo-painel);
+}
+
+/* Responsividade básica para telas menores */
+@media (max-width: 768px) {
+  .main-container,
+  .dual-panel-container {
+    flex-direction: column;
+  }
+
+  .chat-panel,
+  .plan-panel {
+    width: 100%;
+  }
+
+  .app-header {
+    padding: 0 16px;
+  }
+}
+
+.page {
+    border: 1px solid #000;
+    padding: 20px;
+    position: relative;
+    min-height: 800px; /* Garante que o PDF tenha um tamanho mínimo */
+    /* Este estilo 'display: block' é importante para o preview em HTML */
+    display: block; 
+    background-color: white; /* Garante fundo branco para o PDF */
+}
+
