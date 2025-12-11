@@ -11,7 +11,7 @@ const BASE_URL = `http://localhost:${port}`;
 
 
 // LINHA 14: SUBSTITUA "YOUR_API_KEY" PELA SUA CHAVE REAL. (Mantenho a sua chave no código)
-const genAI = new GoogleGenerativeAI("AIzaSyDdWhKv09fteWkRwbIDvxDwF8xa7_s9SjU"); 
+const genAI = new GoogleGenerativeAI("AIzaSyCxCm034cgvR6ZjYLVKDmNc6ORwZ7qt7ys"); 
 const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 app.use(express.static(path.join(__dirname)));
 app.use(cors());
@@ -96,7 +96,6 @@ function generateHtmlFromContext(data) {
     // Tópicos/Ementa (Bloco de Texto <br>)
     // MANTIDO, pois Ementa é parte padrão do Plano de Ensino, mesmo se o campo de input foi removido.
     const ementaHtml = data.topicos ? data.topicos.replace(/\n/g, '<br>') : 'Não Gerado';
-
     // Referências
     const referenciasTexto = data.referencias || '';
     const referenciasArray = referenciasTexto.split('\n').map(line => line.trim()).filter(line => line.length > 0);
@@ -207,6 +206,24 @@ function generateHtmlFromContext(data) {
                 background: white;
                 box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
                 box-sizing: border-box;
+                position: relative;
+            }
+            .page-a4::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: -1; /* Manda a marca d'água para trás do conteúdo */
+                
+                /* Configuração da Imagem */
+                background-image: url('${BASE_URL}/logos/MarcaDaAgua-removebg-preview.png');
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: 80%; /* Ajuste o tamanho conforme necessário (ex: 50% ou 80%) */
+                opacity: 0.1; /* ESSENCIAL: Deixa a imagem transparente */
+                pointer-events: none; /* Garante que não interfira com seleção de texto */
             }
 
             .logo-container {
@@ -346,7 +363,7 @@ function generateHtmlFromContext(data) {
             .metodologia-opcoes input[type="checkbox"]:checked,
             .recursos-opcoes input[type="checkbox"]:checked,
             .avaliacao-opcoes input[type="checkbox"]:checked {
-                background-color: #333;
+                background-color: #333 ;
             }
 
             .nota-recursos {
@@ -363,6 +380,21 @@ function generateHtmlFromContext(data) {
             }
 
             @media print {
+            .page-a4::before {
+                    content: '';
+                    position: fixed; /* Fixa a imagem no viewport (para todas as páginas) */
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    z-index: -1;
+                    
+                    background-image: url('${BASE_URL}/logos/MarcaDaAgua-removebg-preview.png'); 
+                    background-repeat: no-repeat;
+                    background-position: center center;
+                    background-size: 80%; 
+                    opacity: 0.1;
+                }
                 body,
                 .page-a4 {
                     background: white;
@@ -377,7 +409,7 @@ function generateHtmlFromContext(data) {
     <body>
         <div class="page-a4">
             <div class="logo-container">
-                <img src="logos/LogoUnifenasPlano.png" alt="Logo da Instituição" />
+                <img src="${BASE_URL}/logos/LogoUnifenasPlano.png" alt="Logo da Instituição" />
             </div>
 
             <hr />
@@ -458,7 +490,7 @@ function generateHtmlFromContext(data) {
             <hr />
 
             <div class="logo-container">
-                <img src="logos/LogoUnifenasPlano.png" alt="Logo da Instituição" />
+                <img src="${BASE_URL}/logos/LogoUnifenasPlano.png" alt="Logo da Instituição" />
             </div>
 
             <hr />
@@ -510,12 +542,12 @@ app.post("/api/chat", async (req, res) => {
         - O campo 'dados' deve ser o JSON completo do plano de aula atualizado/gerado.
 
         **Comando de Alteração ('ALTERAR'):**
-        Se a mensagem for uma instrução de mudança, o campo 'comando' é 'ALTERAR'. O campo 'dados' é o JSON atualizado. **Após qualquer alteração, você DEVE re-gerar TODO o conteúdo dos campos de texto (objetivos, desenvolvimento, referencias, topicos) para refletir o novo contexto da disciplina/curso, seguindo as REGRAS CRÍTICAS de FORMATAÇÃO.**
+        Se a mensagem for uma instrução de mudança, o campo 'comando' é 'ALTERAR'. O campo 'dados' é o JSON atualizado. **Após qualquer alteração, você DEVE re-gerar TODO o conteúdo dos campos de texto (objetivos, desenvolvimento, referencias) para refletir o novo contexto da disciplina/curso, seguindo as REGRAS CRÍTICAS de FORMATAÇÃO.**
 
         **Comando de Geração ('GERAR'):**
         Se a mensagem for uma confirmação final ('sim', 'pode gerar'), o campo 'comando' é 'GERAR'. Você DEVE preencher todos os campos vazios de conteúdo e retornar o JSON completo no campo 'dados', seguindo as **REGRAS CRÍTICAS de FORMATAÇÃO** acima.
 
-        Os campos do JSON que você DEVE manipular são: 'nivelEnsino', 'formatoAula', 'nomeCurso', 'nomeDisciplina', 'horasTotais', 'semanas', 'numReferencias', 'numReferenciasComp', 'avaliacao', 'metodologias', 'topicos', 'objetivos', 'recursos', 'desenvolvimento', 'referencias'.
+        Os campos do JSON que você DEVE manipular são: 'nivelEnsino', 'formatoAula', 'nomeCurso', 'nomeDisciplina', 'horasTotais', 'semanas', 'numReferencias', 'numReferenciasComp', 'avaliacao', 'metodologias', 'objetivos', 'recursos', 'desenvolvimento', 'referencias'.
         
         **Os valores para 'avaliacao', 'metodologias' e 'recursos' DEVEM ser as listas de strings exatas do front-end separadas por vírgula (Ex: "Prova Discursiva, Prova Oral", "Trabalho de Grupo, Debate", "Laboratório, Internet").**
 

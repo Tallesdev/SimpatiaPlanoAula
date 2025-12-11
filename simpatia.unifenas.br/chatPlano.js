@@ -32,19 +32,16 @@ function collectFormData() {
     const numReferenciasComp = document.getElementById("num-referencias-comp").value;
     const semestre = document.getElementById("semestre").value;
     const ano = document.getElementById("ano").value;
+    
 
     const avaliacaoCheckboxes = document.querySelectorAll('input[name="avaliacao"]:checked');
     const avaliacaoSelecionada = Array.from(avaliacaoCheckboxes).map(cb => cb.value).join(", ");
-    const outrosAvaliacao = document.getElementById("outros-avaliacao").value;
 
     const metodologiaCheckboxes = document.querySelectorAll('input[name="metodologia"]:checked');
     const metodologiasSelecionadas = Array.from(metodologiaCheckboxes).map(cb => cb.value).join(", ");
 
     const recursosCheckboxes = document.querySelectorAll('input[name="recursos"]:checked');
     const recursosSelecionados = Array.from(recursosCheckboxes).map(cb => cb.value);
-    const outrosRecursos = document.getElementById("outros-recursos").value;
-    // Combina recursos selecionados com o campo "Outros"
-    const recursosFinal = recursosSelecionados.join(", ") + (outrosRecursos ? (", " + outrosRecursos) : "");
 
     formData = {
         // Campos de texto e seleção
@@ -59,12 +56,11 @@ function collectFormData() {
         semestre,
         ano,
         // Campos de lista que o Gemini deve alterar/adicionar
-        avaliacao: avaliacaoSelecionada + (outrosAvaliacao ? (", " + outrosAvaliacao) : ""),
+        avaliacao: avaliacaoSelecionada,
         metodologias: metodologiasSelecionadas,
-        recursos: recursosFinal,
+        recursos: recursosSelecionados,
         // Campos adicionais que o Gemini irá preencher (deixados vazios por enquanto)
         objetivos: "", // O Gemini preencherá
-        recursos: "", // O Gemini preencherá
         desenvolvimento: "", // O Gemini preencherá
         referencias: "", // O Gemini preencherá
     };
@@ -79,7 +75,7 @@ function generateConfirmationMessage() {
         return;
     }
 
-    const message = `Só para confirmar, você gostaria de criar um plano de aula para a disciplina de **${formData.nomeDisciplina || 'N/A'}** (curso de **${formData.nomeCurso || 'N/A'}**) com as seguintes informações:
+    const message = `Só para confirmar, você gostaria de criar um plano de aula para a disciplina de ${formData.nomeDisciplina || 'N/A'} (curso de ${formData.nomeCurso || 'N/A'}) com as seguintes informações:
     - Nível de Ensino: ${formData.nivelEnsino}
     - Formato: ${formData.formatoAula}
     - Carga Horária: ${formData.horasTotais || 'N/A'} horas (${formData.semanas || 'N/A'} semanas)
@@ -87,10 +83,9 @@ function generateConfirmationMessage() {
     - Avaliação: ${formData.avaliacao || 'Não especificado'}
     - Metodologias: ${formData.metodologias || 'Não especificadas'}
     - Recursos Auxiliares: ${formData.recursos || 'Não especificados'}
-    
-    Se as informações estiverem corretas, digite "**sim**" ou faça alguma alteração no chat.`;
+    Se as informações estiverem corretas, digite "sim" ou faça alguma alteração no chat.`;
 
-    appendMessage(message, "bot"); // Mudança: A confirmação deve ser do BOT
+    appendMessage(message, "bot"); // confirmação do BOT
 }
 
 async function sendMessage() {
@@ -115,7 +110,7 @@ async function sendMessage() {
             chatMessages.removeChild(botMessageElement);
         }
 
-        // CORREÇÃO CRÍTICA APLICADA AQUI: updatedData e htmlResponse são tratados.
+        // updatedData e htmlResponse são tratados.
         if (data.updatedData) {
             // 1. ATUALIZA OS DADOS LOCAIS COM A RESPOSTA DA IA
             formData = data.updatedData;
@@ -138,7 +133,7 @@ async function sendMessage() {
             // Se a IA não entendeu, exibe a mensagem de erro E MANTÉM O CONTEXTO
             appendMessage(data.response, "bot");
             
-            // Se não houver HTML, exibe o placeholder (deve ser raro após as correções no server.js)
+            // Se não houver HTML, exibe o placeholder 
             planOutput.innerHTML = `
                 <div class="placeholder-text">
                     <h2>Seu plano de aula aparecerá aqui...</h2>
@@ -159,8 +154,6 @@ async function sendMessage() {
     }
 }
 
-// REMOVIDA A FUNÇÃO generatePlanFromData, pois o fluxo agora está unificado em sendMessage.
-// REMOVIDA A FUNÇÃO updateFormFields (pode ser adicionada depois)
 
 // Event listeners
 generateBtn.addEventListener("click", generateConfirmationMessage);
@@ -171,9 +164,8 @@ userInput.addEventListener("keypress", (e) => {
     }
 });
 
-// Listener para o botão de PDF (NÃO HÁ ALTERAÇÕES AQUI)
+// Listener para o botão de PDF 
 downloadPdfBtn.addEventListener("click", async () => {
-    // ... (Seu código do PDF continua aqui)
     const htmlContent = planOutput.innerHTML;
 
   try {
@@ -201,24 +193,3 @@ downloadPdfBtn.addEventListener("click", async () => {
     alert("Não foi possível baixar o PDF. Tente novamente mais tarde.");
   }
 });
-
-// A função updateFormFields não é mais necessária para o fluxo principal, mas é mantida aqui.
-/*
-function updateFormFields(data) {
-    document.getElementById("nivel-ensino").value = data.nivelEnsino;
-    document.getElementById("formato-aula").value = data.formatoAula;
-    document.getElementById("nome-curso").value = data.nomeCurso;
-    document.getElementById("nome-disciplina").value = data.nomeDisciplina;
-    document.getElementById("horas-totais").value = data.horasTotais;
-    document.getElementById("semanas").value = data.semanas;
-    document.getElementById("num-referencias").value = data.numReferencias;
-    document.getElementById("num-referencias-comp").value = data.numReferenciasComp;
-
-    // Lógica para atualizar os checkboxes
-    const avaliacaoCheckboxes = document.querySelectorAll('input[name="avaliacao"]');
-    avaliacaoCheckboxes.forEach(cb => {
-        cb.checked = data.avaliacao.includes(cb.value);
-    });
-    // Você pode precisar de uma lógica para "outros" métodos de avaliação
-}
-*/
