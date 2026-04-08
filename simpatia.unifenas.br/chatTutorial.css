@@ -1,0 +1,400 @@
+/* ============================================================
+   CHAT TUTORIAL — Pop-up flutuante para PlanoAula.html
+   Segue o design system do stylePlano.css (variáveis :root)
+   ============================================================ */
+
+/* --- Botão de abertura (fixo, canto inferior direito) --- */
+#tutorial-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 1000;
+
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #370199 0%, #0d6fff 100%);
+  color: #fefeff;
+  box-shadow: 0 4px 20px rgba(55, 1, 153, 0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.2s ease;
+}
+
+#tutorial-fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(55, 1, 153, 0.6);
+}
+
+#tutorial-fab.is-open {
+  transform: rotate(90deg) scale(1.0);
+}
+
+#tutorial-fab svg {
+  width: 26px;
+  height: 26px;
+  transition: opacity 0.15s ease;
+}
+
+/* Tooltip ao lado do botão */
+#tutorial-fab::before {
+  content: 'Precisa de ajuda?';
+  position: absolute;
+  right: calc(100% + 12px);
+  white-space: nowrap;
+  background: #0c0c12;
+  color: #fefeff;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#tutorial-fab:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+#tutorial-fab.is-open::before {
+  opacity: 0;
+}
+
+/* Pulso de atenção (aparece uma vez ao carregar) */
+@keyframes pulse-ring {
+  0%   { transform: scale(1);    opacity: 0.6; }
+  100% { transform: scale(1.75); opacity: 0; }
+}
+
+#tutorial-fab-pulse {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 999;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(55, 1, 153, 0.4);
+  pointer-events: none;
+  animation: pulse-ring 1.4s ease-out 1.2s 2;
+}
+
+/* --- Painel do chat (pop-up) --- */
+#tutorial-panel {
+  position: fixed;
+  bottom: 96px;
+  right: 28px;
+  z-index: 999;
+
+  width: 360px;
+  height: 520px;
+  border-radius: 16px;
+  overflow: hidden;
+
+  background: #fefeff;
+  border: 1px solid #e4e4f2;
+  box-shadow: 0 8px 40px rgba(12, 12, 18, 0.14),
+              0 2px 8px rgba(12, 12, 18, 0.08);
+
+  display: flex;
+  flex-direction: column;
+
+  /* Estado fechado */
+  opacity: 0;
+  transform: translateY(16px) scale(0.97);
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.25s cubic-bezier(0.34, 1.3, 0.64, 1);
+  transform-origin: bottom right;
+}
+
+#tutorial-panel.is-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+/* Cabeçalho do pop-up */
+#tutorial-header {
+  background: linear-gradient(135deg, #370199 0%, #0d6fff 100%);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+#tutorial-header-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+#tutorial-header-avatar svg {
+  width: 20px;
+  height: 20px;
+  color: #fefeff;
+}
+
+#tutorial-header-info {
+  flex: 1;
+}
+
+#tutorial-header-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fefeff;
+  margin: 0;
+  line-height: 1.3;
+}
+
+#tutorial-header-status {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: rgba(255,255,255,0.75);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+#tutorial-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  flex-shrink: 0;
+}
+
+/* Área de mensagens */
+#tutorial-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f8f8fc;
+}
+
+#tutorial-messages::-webkit-scrollbar { width: 4px; }
+#tutorial-messages::-webkit-scrollbar-track { background: transparent; }
+#tutorial-messages::-webkit-scrollbar-thumb {
+  background: #d1d1e4;
+  border-radius: 4px;
+}
+
+/* Mensagens */
+.tut-msg {
+  max-width: 88%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  line-height: 1.55;
+  word-break: break-word;
+}
+
+.tut-msg.bot {
+  background: #fefeff;
+  color: #0c0c12;
+  border: 1px solid #e4e4f2;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.tut-msg.user {
+  background: linear-gradient(135deg, #370199 0%, #4a16b0 100%);
+  color: #fefeff;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.tut-msg.bot strong {
+  color: #370199;
+  font-weight: 600;
+}
+
+.tut-msg.bot em {
+  font-style: italic;
+  color: #4c4b67;
+}
+
+.tut-msg.bot ol,
+.tut-msg.bot ul {
+  margin: 6px 0 4px 0;
+  padding-left: 18px;
+}
+
+.tut-msg.bot ol {
+  list-style: decimal;
+}
+
+.tut-msg.bot ul {
+  list-style: disc;
+}
+
+.tut-msg.bot li {
+  margin-bottom: 4px;
+  line-height: 1.5;
+  color: #0c0c12;
+}
+
+.tut-msg.bot li::marker {
+  color: #370199;
+}
+.tut-typing {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 12px 14px;
+  background: #fefeff;
+  border: 1px solid #e4e4f2;
+  border-radius: 14px;
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+@keyframes tut-bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40%           { transform: translateY(-5px); opacity: 1; }
+}
+
+.tut-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #370199;
+  animation: tut-bounce 1.2s ease-in-out infinite;
+}
+.tut-dot:nth-child(2) { animation-delay: 0.15s; }
+.tut-dot:nth-child(3) { animation-delay: 0.30s; }
+
+/* Chips de sugestão rápida — dentro da área de mensagens */
+#tutorial-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 0 2px;
+}
+
+.tut-chip {
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 5px 11px;
+  border-radius: 20px;
+  border: 1.5px solid #c8c7e8;
+  background: #fefeff;
+  color: #370199;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.tut-chip:hover {
+  background: #370199;
+  color: #fefeff;
+  border-color: #370199;
+}
+
+/* Área de input */
+#tutorial-input-area {
+  padding: 12px 16px;
+  border-top: 1px solid #e4e4f2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fefeff;
+  flex-shrink: 0;
+}
+
+#tutorial-input {
+  flex: 1;
+  border: 1.5px solid #e4e4f2;
+  border-radius: 22px;
+  padding: 9px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  color: #0c0c12;
+  background: #f8f8fc;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  resize: none;
+}
+
+#tutorial-input:focus {
+  border-color: #370199;
+  box-shadow: 0 0 0 3px rgba(55, 1, 153, 0.1);
+  background: #fefeff;
+}
+
+#tutorial-input::placeholder { color: #9998b8; }
+
+#tutorial-send {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #370199 0%, #0d6fff 100%);
+  color: #fefeff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+#tutorial-send:hover {
+  transform: scale(1.08);
+  box-shadow: 0 3px 12px rgba(55, 1, 153, 0.4);
+}
+
+#tutorial-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#tutorial-send svg {
+  width: 17px;
+  height: 17px;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  #tutorial-panel {
+    width: calc(100vw - 32px);
+    right: 16px;
+    bottom: 88px;
+    height: 70vh;
+  }
+  #tutorial-fab {
+    right: 16px;
+    bottom: 16px;
+  }
+  #tutorial-fab-pulse {
+    right: 16px;
+    bottom: 16px;
+  }
+}

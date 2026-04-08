@@ -1,0 +1,10 @@
+# Dependências (pasta pesada que o npm instala)
+node_modules/
+
+# Arquivos de configuração sensíveis (onde estão suas chaves de API)
+.env
+.env.local
+
+# Outros arquivos comuns de sistema
+.DS_Store
+Thumbs.db
