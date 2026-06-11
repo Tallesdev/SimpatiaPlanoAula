@@ -1,12 +1,10 @@
-/* ============================================================
-   chatTutorial.js — Pop-up de ajuda para o módulo Plano de Aula
-   Comunica com POST /api/tutorial no server.js
-   ============================================================ */
+/* chatTutorial.js — Pop-up de ajuda para o módulo Plano de Aula
+   Comunica com POST /api/tutorial no server.js */
 
 (function () {
   "use strict";
 
-  // ── Chips de perguntas rápidas ──────────────────────────────
+  // Chips de perguntas rápidas
   const CHIPS = [
     "Como gero um plano?",
     "O que é o campo Semanas?",
@@ -14,17 +12,17 @@
     "Como baixo o PDF?",
   ];
 
-  // ── Mensagem de boas-vindas ─────────────────────────────────
+  // Mensagem de boas-vindas
   const WELCOME =
     "Olá! 👋 Sou o assistente do módulo <strong>Plano de Aula</strong>. " +
     "Pode me perguntar qualquer coisa sobre como usar esta ferramenta — " +
     "campos do formulário, geração do plano, exportação em PDF, e mais.";
 
-  // ── Estado ──────────────────────────────────────────────────
+  //  Estado 
   let isOpen = false;
   let isLoading = false;
 
-  // ── Injeção do HTML do pop-up ───────────────────────────────
+  // Injeção do HTML do pop-up
   function injectHTML() {
     // Pulso de atenção
     const pulse = document.createElement("div");
@@ -103,7 +101,7 @@
     document.body.appendChild(panel);
   }
 
-  // ── Renderiza chips dentro da área de mensagens ─────────────
+  // Renderiza chips dentro da área de mensagens
   function renderChips() {
     // Remove chips anteriores se existirem
     const old = document.getElementById("tutorial-chips");
@@ -125,7 +123,7 @@
     messages.scrollTop = messages.scrollHeight;
   }
 
-  // ── Adiciona mensagem na área de chat ───────────────────────
+  // Adiciona mensagem na área de chat
   function appendMessage(html, sender) {
     const messages = document.getElementById("tutorial-messages");
     const div = document.createElement("div");
@@ -136,7 +134,7 @@
     return div;
   }
 
-  // ── Typing indicator ────────────────────────────────────────
+  // Typing indicator 
   function showTyping() {
     const messages = document.getElementById("tutorial-messages");
     const div = document.createElement("div");
@@ -155,7 +153,7 @@
     if (indicator) indicator.remove();
   }
 
-  // ── Envia mensagem para o servidor ──────────────────────────
+  // Envia mensagem para o servidor 
   async function sendMessage(text) {
     const input = document.getElementById("tutorial-input");
     const sendBtn = document.getElementById("tutorial-send");
@@ -163,19 +161,15 @@
     const question = (text || input.value).trim();
     if (!question || isLoading) return;
 
-    // Limpa input e desabilita
     input.value = "";
     isLoading = true;
     sendBtn.disabled = true;
 
-    // Exibe mensagem do usuário
     appendMessage(escapeHtml(question), "user");
 
-    // Remove chips durante a resposta
     const chipsEl = document.getElementById("tutorial-chips");
     if (chipsEl) chipsEl.remove();
 
-    // Typing indicator
     showTyping();
 
     try {
@@ -206,12 +200,12 @@
       sendBtn.disabled = false;
       input.focus();
 
-      // Reexibe chips no final das mensagens
+      // Re-exibe chips no final das mensagens
       renderChips();
     }
   }
 
-  // ── Escapa HTML para mensagens do usuário ───────────────────
+  // Escapa HTML para mensagens do usuário 
   function escapeHtml(str) {
     return str
       .replace(/&/g, "&amp;")
@@ -220,26 +214,21 @@
       .replace(/"/g, "&quot;");
   }
 
-  // ── Converte Markdown simples → HTML para respostas do bot ──
+  // Converte Markdown simples → HTML para respostas do bot 
   function markdownToHtml(text) {
     return text
-      // Blocos de código (antes do inline para não conflitar)
       .replace(/```[\s\S]*?```/g, "")
 
-      // Títulos: ### ## #
       .replace(/^### (.+)$/gm, "<strong>$1</strong>")
       .replace(/^## (.+)$/gm,  "<strong>$1</strong>")
       .replace(/^# (.+)$/gm,   "<strong>$1</strong>")
 
-      // Negrito **texto** ou __texto__
       .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
       .replace(/__(.+?)__/g,     "<strong>$1</strong>")
 
-      // Itálico *texto* ou _texto_
       .replace(/\*(.+?)\*/g, "<em>$1</em>")
       .replace(/_(.+?)_/g,   "<em>$1</em>")
 
-      // Listas numeradas: "1. item"
       .replace(
         /((?:^\d+\. .+\n?)+)/gm,
         (block) => {
@@ -251,7 +240,6 @@
         }
       )
 
-      // Listas não-ordenadas: "* item" ou "- item"
       .replace(
         /((?:^[*\-] .+\n?)+)/gm,
         (block) => {
@@ -263,20 +251,20 @@
         }
       )
 
-      // Quebras de linha duplas → parágrafo
+      
       .replace(/\n{2,}/g, "<br><br>")
 
-      // Quebras de linha simples dentro de parágrafos
+    
       .replace(/\n/g, "<br>")
 
-      // Remove <br> desnecessários logo antes/depois de listas
+      
       .replace(/<br><br>(<[uo]l>)/g, "$1")
       .replace(/(<\/[uo]l>)<br><br>/g, "$1")
       .replace(/<br>(<[uo]l>)/g, "$1")
       .replace(/(<\/[uo]l>)<br>/g, "$1");
   }
 
-  // ── Abre / fecha o pop-up ───────────────────────────────────
+  // Abre / fecha o pop-up 
   function togglePanel() {
     const panel = document.getElementById("tutorial-panel");
     const fab = document.getElementById("tutorial-fab");
@@ -296,7 +284,7 @@
     }
   }
 
-  // ── Fecha ao clicar fora ────────────────────────────────────
+  // Fecha ao clicar fora
   function handleOutsideClick(e) {
     const panel = document.getElementById("tutorial-panel");
     const fab = document.getElementById("tutorial-fab");
@@ -305,20 +293,19 @@
     }
   }
 
-  // ── Fecha com Esc ───────────────────────────────────────────
+  //Fecha com Esc
   function handleKeydown(e) {
     if (e.key === "Escape" && isOpen) togglePanel();
   }
 
-  // ── Inicialização ───────────────────────────────────────────
+  // Inicialização
   function init() {
     injectHTML();
     renderChips();
 
-    // Mensagem de boas-vindas
     appendMessage(WELCOME, "bot");
 
-    // Eventos
+   
     document.getElementById("tutorial-fab").addEventListener("click", togglePanel);
     document.getElementById("tutorial-send").addEventListener("click", () => sendMessage());
     document.getElementById("tutorial-input").addEventListener("keydown", (e) => {
@@ -330,7 +317,7 @@
     document.addEventListener("mousedown", handleOutsideClick);
     document.addEventListener("keydown", handleKeydown);
 
-    // Remove o pulso após as animações
+    
     setTimeout(() => {
       const pulse = document.getElementById("tutorial-fab-pulse");
       if (pulse) pulse.remove();
