@@ -200,6 +200,44 @@ R: A interface é responsiva. Em telas menores, os painéis se reorganizam verti
 `;
 
 // ----------------------------------------------------
+// 0. Marca d'água (watermark) em padrão repetido/diagonal
+// ----------------------------------------------------
+
+// Edite este texto para mudar o conteúdo da marca d'água.
+const WATERMARK_TEXT = "Documento gerado por IA — sujeito à revisão institucional, sem valor legal.";
+
+// Gera um "data URI" de um SVG com o texto rotacionado, que será usado
+// como background-image repetido (background-repeat: repeat), criando
+// o efeito de marca d'água diagonal e tilada (igual ao padrão usado em
+// PDFs de e-book / Minha Biblioteca, como no exemplo do Robótica.pdf).
+function buildWatermarkDataUri(text, options = {}) {
+    const tileWidth = options.tileWidth || 650;
+    const tileHeight = options.tileHeight || 320;
+    const fontSize = options.fontSize || 25;
+    const angle = options.angle ?? -28;
+    const color = options.color || "rgba(70,70,70,0.35)";
+
+    const escapedText = text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+    const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="${tileWidth}" height="${tileHeight}"
+             viewBox="0 0 ${tileWidth} ${tileHeight}">
+            <text x="${tileWidth / 2}" y="${tileHeight / 2}"
+                  text-anchor="middle" dominant-baseline="middle"
+                  transform="rotate(${angle} ${tileWidth / 2} ${tileHeight / 2})"
+                  font-family="Arial, Helvetica, sans-serif" font-size="${fontSize}"
+                  fill="${color}">${escapedText}</text>
+        </svg>
+    `;
+
+    // Base64 evita problemas de encoding com acentos (ã, ç, é, etc.) no data URI.
+    return `data:image/svg+xml;base64,${Buffer.from(svg, "utf-8").toString("base64")}`;
+}
+
+// ----------------------------------------------------
 // 1. Definições das Listas e Mapeamento
 // ----------------------------------------------------
 
@@ -250,6 +288,8 @@ const AVALIACOES_MAP = [
 // ----------------------------------------------------
 
 function generateHtmlFromContext(data) {
+    const watermarkDataUri = buildWatermarkDataUri(WATERMARK_TEXT);
+
     const objetivosHtml = data.objetivos ? data.objetivos.split('\n')
         .map(o => o.trim())
         .filter(o => o.length > 0)
@@ -329,7 +369,7 @@ function generateHtmlFromContext(data) {
                 margin: 0;
                 padding: 0;
                 font-family: Arial, sans-serif;
-                font-size: 11pt;
+                font-size: 15pt;
             }
             .page-a4 {
                 width: 21cm;
@@ -352,23 +392,32 @@ function generateHtmlFromContext(data) {
                 opacity: 0.1;
                 pointer-events: none;
             }
+            .watermark-pattern {
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                z-index: 999;
+                pointer-events: none;
+                background-image: url('${watermarkDataUri}');
+                background-repeat: repeat;
+                background-position: top left;
+            }
             .logo-container { text-align: center; margin-bottom: 0px; line-height: 0.5; }
             .logo-container img { width: 8cm; height: auto; margin: 0 auto; vertical-align: top; }
             .logo-container p { margin: 0; padding: 0; }
             hr { border: 0; height: 1px; background: #333; margin: 1px 0; }
-            .info-block { display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 8pt; text-transform: uppercase; font-weight: bold; }
+            .info-block { display: flex; flex-wrap: wrap; justify-content: space-between; font-size: 13pt; text-transform: uppercase; font-weight: bold; }
             .info-item { width: 18%; padding: 0px 0; box-sizing: border-box; }
-            .disciplina-line { font-size: 8pt; font-weight: bold; text-transform: uppercase; padding: 2px 0; }
-            .plano-titulo-line { font-size: 8pt; font-weight: bold; text-align: center; text-transform: uppercase; padding: 1px 0; }
+            .disciplina-line { font-size: 13pt; font-weight: bold; text-transform: uppercase; padding: 2px 0; }
+            .plano-titulo-line { font-size: 13pt; font-weight: bold; text-align: center; text-transform: uppercase; padding: 1px 0; }
             .objetivo-line, .ementa-line, .metodologia-titulo, .recursos-titulo,
             .avaliacao-titulo, .bibliografia-titulo, .conteudo-line {
-                font-size: 9pt; font-weight: bold; text-transform: uppercase; margin-top: 10px; padding: 0;
+                font-size: 14pt; font-weight: bold; text-transform: uppercase; margin-top: 10px; padding: 0;
             }
-            .objetivos-content, .ementa-content, .conteudo-content { font-size: 9pt; padding: 0 0 5px 0; text-align: justify; }
+            .objetivos-content, .ementa-content, .conteudo-content { font-size: 14pt; padding: 0 0 5px 0; text-align: justify; }
             .objetivos-content ul { list-style-type: disc; margin-top: 2px; padding-left: 20px; }
             .objetivos-content li { margin-bottom: 3px; }
             .metodologia-container, .recursos-container, .avaliacao-container {
-                font-size: 9pt; display: flex; flex-wrap: wrap; justify-content: space-between; padding: 5px 0;
+                font-size: 14pt; display: flex; flex-wrap: wrap; justify-content: space-between; padding: 5px 0;
             }
             .metodologia-coluna, .recursos-coluna, .avaliacao-coluna { width: 48%; }
             .metodologia-item, .recursos-item, .avaliacao-item {
@@ -387,8 +436,8 @@ function generateHtmlFromContext(data) {
             .metodologia-opcoes input[type="checkbox"]:checked,
             .recursos-opcoes input[type="checkbox"]:checked,
             .avaliacao-opcoes input[type="checkbox"]:checked { background-color: #333; }
-            .nota-recursos { font-size: 8pt; text-align: left; margin-top: 5px; padding-left: 5px; }
-            .bibliografia-content { font-size: 9pt; padding: 5px 0 5px 0; text-align: justify; }
+            .nota-recursos { font-size: 12pt; text-align: left; margin-top: 5px; padding-left: 5px; }
+            .bibliografia-content { font-size: 14pt; padding: 5px 0 5px 0; text-align: justify; }
             @media print {
                 .page-a4::before {
                     content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -1;
@@ -396,12 +445,18 @@ function generateHtmlFromContext(data) {
                     background-repeat: no-repeat; background-position: center center;
                     background-size: 80%; opacity: 0.1;
                 }
+                .watermark-pattern {
+                    position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 999;
+                    background-image: url('${watermarkDataUri}');
+                    background-repeat: repeat; background-position: top left;
+                }
                 body, .page-a4 { background: white; width: 21cm; min-height: 29.7cm; margin: 0; box-shadow: none; }
             }
         </style>
     </head>
     <body>
         <div class="page-a4">
+            <div class="watermark-pattern"></div>
             <div class="logo-container">
                 <img src="${BASE_URL}/logos/LogoUnifenasPlano.png" alt="Logo da Instituição" />
             </div>
@@ -485,16 +540,23 @@ function generateHtmlFromContext(data) {
 app.post("/api/chat", async (req, res) => {
     const { message, context } = req.body;
 
+    const numSemanas = parseInt(context?.semanas) > 0 ? parseInt(context?.semanas) : null;
+
     const prompt = `
         Você é um assistente de IA para um gerador de plano de aula (PLANO DE ENSINO). Sua tarefa é analisar o contexto do plano de aula e a mensagem do usuário, e gerar o conteúdo acadêmico.
 
+        **REGRA ANTI-CÓPIA (A MAIS IMPORTANTE DE TODAS):**
+        Todo o conteúdo gerado (objetivos, ementa/tópicos, desenvolvimento, referências) deve ser 100% original e específico para a disciplina "${context?.nomeDisciplina || ''}" do curso "${context?.nomeCurso || ''}", exatamente como informado no contexto abaixo.
+        NUNCA gere conteúdo sobre um assunto diferente do informado (ex: se a disciplina for "Anatomia", o conteúdo deve ser inteiramente sobre Anatomia, nunca sobre robótica, programação ou qualquer outro tema).
+        Quaisquer instruções de formatação abaixo são apenas regras de ESTRUTURA (como separar itens). Elas não contêm nenhum conteúdo de exemplo a ser reaproveitado — não existe texto "modelo" para copiar.
+
         **REGRAS CRÍTICAS DE FORMATAÇÃO (Obrigatórias):**
 
-        1.  **Listas (Objetivos, Recursos, Referências):** O conteúdo deve ser uma lista de itens, OBRIGATORIAMENTE separados por um único caractere de quebra de linha (\\n).
-            * Exemplo de Objetivos: "Definir robótica\\nDiscutir princípios\\nDesenvolver sistemas."
-            * Exemplo de Referências (ABNT/Vancouver): "AUTOR, A. Livro X...\\nAUTOR, B. Livro Y..."
+        1.  **Listas (Objetivos, Recursos, Referências, Ementa/Tópicos):** O conteúdo deve ser uma lista de itens reais sobre a disciplina, OBRIGATORIAMENTE separados por um único caractere de quebra de linha (\\n), sem marcadores, traços ou numeração no início de cada item.
 
-        2.  **Bloco de Texto (Desenvolvimento, Ementa/Tópicos):** O conteúdo deve ser um bloco de texto detalhado, onde cada parágrafo, tópico de aula ou semana de aula OBRIGATORIAMENTE é separado por um único caractere de quebra de linha (\\n). Use **\\n** para criar o espaçamento entre as semanas/tópicos.
+        2.  **Cronograma (campo 'desenvolvimento'):** ${numSemanas
+            ? `Você DEVE gerar EXATAMENTE ${numSemanas} parágrafos, um para cada semana, na ordem "Semana 1" até "Semana ${numSemanas}", cada um separado por um único caractere de quebra de linha (\\n). Cada parágrafo deve descrever um CONTEÚDO ESPECÍFICO E DIFERENTE da disciplina (um subtema, tópico ou habilidade real do assunto), nunca um texto genérico. É PROIBIDO usar frases genéricas e repetidas como "será dedicada à avaliação da disciplina" ou "preparação para a prova final" em mais de uma semana — distribua o conteúdo real da matéria ao longo de TODAS as ${numSemanas} semanas, sem dividir artificialmente em "semanas de aula" e "semanas de avaliação".`
+            : `Gere um cronograma detalhado e específico do conteúdo da disciplina, com cada parágrafo/semana separado por um único caractere de quebra de linha (\\n), sem frases genéricas repetidas.`}
 
         **SAÍDA ESPERADA:**
         Você deve retornar um objeto JSON **estritamente e somente** com dois campos: 'comando' e 'dados'.
@@ -502,13 +564,15 @@ app.post("/api/chat", async (req, res) => {
         - O campo 'dados' deve ser o JSON completo do plano de aula atualizado/gerado.
 
         **Comando de Alteração ('ALTERAR'):**
-        Se a mensagem for uma instrução de mudança, o campo 'comando' é 'ALTERAR'. O campo 'dados' é o JSON atualizado. **Após qualquer alteração, você DEVE re-gerar TODO o conteúdo dos campos de texto (objetivos, desenvolvimento, referencias) para refletir o novo contexto da disciplina/curso, seguindo as REGRAS CRÍTICAS de FORMATAÇÃO.**
+        Se a mensagem for uma instrução de mudança, o campo 'comando' é 'ALTERAR'. O campo 'dados' é o JSON atualizado. **Após qualquer alteração, você DEVE re-gerar TODO o conteúdo dos campos de texto (objetivos, topicos, desenvolvimento, referencias) para refletir o novo contexto da disciplina/curso, seguindo as REGRAS CRÍTICAS de FORMATAÇÃO.**
 
         **Comando de Geração ('GERAR'):**
         Se a mensagem for uma confirmação final ('sim', 'pode gerar'), o campo 'comando' é 'GERAR'. Você DEVE preencher todos os campos vazios de conteúdo e retornar o JSON completo no campo 'dados', seguindo as **REGRAS CRÍTICAS de FORMATAÇÃO** acima.
 
-        Os campos do JSON que você DEVE manipular são: 'nivelEnsino', 'formatoAula', 'nomeCurso', 'nomeDisciplina', 'horasTotais', 'semanas', 'numReferencias', 'numReferenciasComp', 'avaliacao', 'metodologias', 'objetivos', 'recursos', 'desenvolvimento', 'referencias'.
-        
+        Os campos do JSON que você DEVE manipular são: 'nivelEnsino', 'formatoAula', 'nomeCurso', 'nomeDisciplina', 'horasTotais', 'semanas', 'numReferencias', 'numReferenciasComp', 'avaliacao', 'metodologias', 'objetivos', 'topicos', 'recursos', 'desenvolvimento', 'referencias'.
+
+        **'topicos' é a EMENTA da disciplina:** uma lista de tópicos que serão estudados em "${context?.nomeDisciplina || ''}", seguindo a REGRA 1 de formatação.
+
         **Os valores para 'avaliacao', 'metodologias' e 'recursos' DEVEM ser as listas de strings exatas do front-end separadas por vírgula (Ex: "Prova Discursiva, Prova Oral", "Trabalho de Grupo, Debate", "Laboratório, Internet").**
 
         ---
@@ -527,12 +591,12 @@ app.post("/api/chat", async (req, res) => {
     while (retryCount < maxRetries) {
         try {
             const completion = await groq.chat.completions.create({
-                model: "llama-3.1-8b-instant",
+                model: "llama-3.3-70b-versatile",
                 messages: [
                     { role: "user", content: prompt }
                 ],
                 temperature: 0.4,
-                max_tokens: 4096,
+                max_tokens: 8192,
             });
 
             const textResponse = completion.choices?.[0]?.message?.content?.trim() || "";
