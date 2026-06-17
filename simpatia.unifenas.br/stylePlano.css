@@ -1,31 +1,46 @@
-/* --- DESIGN SYSTEM: VARIÁVEIS GLOBAIS (TEMA CLARO) --- */
+/* ================================================================
+   DESIGN SYSTEM — SIMPATIA | Plano de Aula
+   Paleta: roxo institucional + azul de ação + fundo gelo
+   ================================================================ */
+
 :root {
-  /* Cores */
   --azul-principal: #0d6fff;
   --roxo-principal: #370199;
   --roxo-hover: #4a16b0;
-  --fundo-principal: #f8f8fc;
-  --fundo-painel: #fefeff;
-  --fundo-componente: #e4e4f2;
-  --cor-borda: #e4e4f2;
-  --texto-principal: #0c0c12;
-  --texto-secundario: #4c4b67;
-  --texto-branco: #fefeff;
-  --cinza-claro: #d1d1e4;
-
-  /* Fontes */
+  --roxo-light: #f0eaff;
+  --roxo-mid: #e8daff;
+  --fundo-principal: #f4f4fb;
+  --fundo-painel: #ffffff;
+  --fundo-componente: #ededf7;
+  --cor-borda: #e2e2ef;
+  --cor-borda-forte: #c8c8e0;
+  --texto-principal: #0c0c1a;
+  --texto-secundario: #5a5980;
+  --texto-placeholder: #9998b8;
+  --texto-branco: #ffffff;
+  --sombra-suave: 0 2px 8px rgba(55, 1, 153, 0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --sombra-painel: 0 4px 20px rgba(55, 1, 153, 0.08), 0 1px 4px rgba(0,0,0,0.04);
+  --sombra-elevada: 0 8px 32px rgba(55, 1, 153, 0.12), 0 2px 8px rgba(0,0,0,0.06);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
   --font-family: 'Inter', sans-serif;
-
-  /* Sombras e Transições */
-  --sombra-painel: 0px 4px 16px rgba(0, 0, 0, 0.06);
-  --transicao-rapida: all 0.2s ease-in-out;
+  --transition: all 0.2s ease;
 }
 
-/* --- ESTILOS GLOBAIS E RESET --- */
-* {
+/* ================================================================
+   RESET E BASE
+   ================================================================ */
+
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  font-size: 15px;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -34,391 +49,796 @@ body {
   color: var(--texto-principal);
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* --- HEADER REFINADO E REESTRUTURADO --- */
+/* ================================================================
+   HEADER
+   ================================================================ */
+
 .app-header {
-  background-color: var(--fundo-painel);
+  background: var(--fundo-painel);
   border-bottom: 1px solid var(--cor-borda);
-  padding: 0 24px;
+  padding: 0 28px;
   flex-shrink: 0;
-  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 0 var(--cor-borda), var(--sombra-suave);
 }
 
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1232px;
+  max-width: 1440px;
   margin: 0 auto;
-  height: 68px;
+  height: 64px;
+  gap: 24px;
 }
 
 .logo-link {
   display: flex;
   align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
 }
+
 .logo-simpatia {
-  height: 30px;
+  height: 28px;
+  width: auto;
 }
 
 .header-nav {
   display: flex;
-  gap: 32px;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  justify-content: center;
 }
+
 .nav-link {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   color: var(--texto-secundario);
   text-decoration: none;
   font-weight: 500;
-  transition: var(--transicao-rapida);
+  font-size: 0.9rem;
+  padding: 7px 14px;
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+  white-space: nowrap;
 }
+
 .nav-link:hover {
-  color: var(--texto-principal);
+  color: var(--roxo-principal);
+  background: var(--roxo-light);
+}
+
+.nav-link svg {
+  opacity: 0.7;
+  transition: var(--transition);
+}
+
+.nav-link:hover svg {
+  opacity: 1;
 }
 
 .cta-button {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 16px;
-  background-color: var(--fundo-painel);
-  border: 1.5px solid var(--roxo-principal);
-  border-radius: 8px;
+  padding: 8px 16px;
+  background: var(--roxo-light);
+  border: 1.5px solid var(--roxo-mid);
+  border-radius: var(--radius-md);
   text-decoration: none;
   color: var(--roxo-principal);
   font-weight: 600;
-  transition: var(--transicao-rapida);
-}
-.cta-button:hover {
-  background-color: #f5f2ff;
-}
-.cta-button svg {
-  color: var(--roxo-principal);
+  font-size: 0.85rem;
+  transition: var(--transition);
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
-/* --- LAYOUT PRINCIPAL (DOIS PAINÉIS) --- */
+.cta-button:hover {
+  background: var(--roxo-mid);
+  border-color: var(--roxo-principal);
+  box-shadow: var(--sombra-suave);
+}
+
+.logo-unifenas {
+  height: 20px;
+  width: auto;
+}
+
+/* ================================================================
+   LAYOUT PRINCIPAL
+   ================================================================ */
+
 .main-container {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  gap: 24px;
-  padding: 24px;
+  flex: 1;
+  gap: 20px;
+  padding: 24px 28px;
   width: 100%;
-  max-width: 1280px;
+  max-width: 1440px;
   margin: 0 auto;
 }
 
-/* Container que envolve os dois painéis inferiores */
-.dual-panel-container {
-  display: flex;
-  flex-grow: 1;
-  gap: 24px;
-}
+/* ================================================================
+   PAINEL DO FORMULÁRIO (TOPO)
+   ================================================================ */
 
-/* --- ESTILOS DO NOVO PAINEL DE INFORMAÇÕES (TOPO) --- */
 .info-panel {
-  background-color: var(--fundo-painel);
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: var(--sombra-painel);
+  background: var(--fundo-painel);
+  border-radius: var(--radius-lg);
   border: 1px solid var(--cor-borda);
-  flex-shrink: 0;
+  box-shadow: var(--sombra-painel);
+  overflow: hidden;
 }
 
-.info-panel h2 {
-  margin-bottom: 24px;
+/* Cabeçalho interno do painel */
+.info-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--cor-borda);
+  background: linear-gradient(135deg, #faf9ff 0%, #f4f0ff 100%);
 }
+
+.info-panel-header-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--roxo-principal), var(--azul-principal));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: white;
+}
+
+.info-panel-header-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.info-panel-header h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  letter-spacing: -0.01em;
+}
+
+.info-panel-header p {
+  font-size: 0.8rem;
+  color: var(--texto-secundario);
+  margin-top: 1px;
+}
+
+.info-panel-body {
+  padding: 20px 24px 24px;
+}
+
+/* ================================================================
+   FORMULÁRIO
+   ================================================================ */
 
 #plan-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
+/* Linha de campos */
 .form-row {
   display: flex;
-  gap: 16px;
+  gap: 14px;
+  align-items: flex-end;
 }
 
 .form-group {
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 6px;
+  min-width: 0;
 }
 
 .form-group label {
+  font-size: 0.8rem;
   font-weight: 600;
-  margin-bottom: 8px;
-  color: var(--texto-principal);
+  color: var(--texto-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .form-group input,
 .form-group select {
-  padding: 12px;
-  border: 1px solid var(--cor-borda);
-  border-radius: 8px;
-  font-size: 16px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--cor-borda);
+  border-radius: var(--radius-md);
+  font-size: 0.93rem;
+  font-family: var(--font-family);
   color: var(--texto-principal);
-  background-color: var(--fundo-componente);
-  transition: var(--transicao-rapida);
+  background: var(--fundo-painel);
+  transition: var(--transition);
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.form-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%235a5980' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
 }
 
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
   border-color: var(--roxo-principal);
-  box-shadow: 0 0 0 2px var(--roxo-principal);
+  box-shadow: 0 0 0 3px rgba(55, 1, 153, 0.1);
+  background: var(--fundo-painel);
 }
 
+.form-group input::placeholder {
+  color: var(--texto-placeholder);
+}
+
+/* Separador de seção */
 .form-section {
   border-top: 1px solid var(--cor-borda);
-  padding-top: 24px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.form-section h3 {
-  margin-bottom: 16px;
-  font-size: 18px;
+.form-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
+.form-section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--cor-borda);
+}
+
+/* Checkboxes */
 .checkbox-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 16px;
+  gap: 8px;
 }
 
 .checkbox-group label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   cursor: pointer;
-  font-weight: 400;
+  font-size: 0.85rem;
+  font-weight: 500;
   color: var(--texto-secundario);
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1.5px solid var(--cor-borda);
+  background: var(--fundo-painel);
+  transition: var(--transition);
+  user-select: none;
+}
+
+.checkbox-group label:hover {
+  border-color: var(--roxo-principal);
+  color: var(--roxo-principal);
+  background: var(--roxo-light);
 }
 
 .checkbox-group input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   appearance: none;
-  background-color: var(--fundo-componente);
-  border: 1px solid var(--cor-borda);
+  -webkit-appearance: none;
+  background: var(--fundo-componente);
+  border: 1.5px solid var(--cor-borda-forte);
   border-radius: 4px;
   cursor: pointer;
   position: relative;
-  transition: var(--transicao-rapida);
+  flex-shrink: 0;
+  transition: var(--transition);
 }
 
 .checkbox-group input[type="checkbox"]:checked {
-  background-color: var(--roxo-principal);
+  background: var(--roxo-principal);
   border-color: var(--roxo-principal);
 }
 
 .checkbox-group input[type="checkbox"]:checked::after {
-  content: '✔';
-  font-size: 14px;
-  color: var(--texto-branco);
+  content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 2px;
+  left: 5px;
+  width: 4px;
+  height: 8px;
+  border: 2px solid white;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
 }
 
+/* Quando o checkbox está checado, estiliza o label pai */
+.checkbox-group label:has(input:checked) {
+  border-color: var(--roxo-principal);
+  color: var(--roxo-principal);
+  background: var(--roxo-light);
+  font-weight: 600;
+}
+
+/* Botão principal */
 #generate-btn {
-  background-color: var(--roxo-principal);
+  /* Ignora o padding lateral de 24px do container pai para morder as bordas */
+  width: calc(100% + 48px); 
+  margin-left: -24px;
+  margin-right: -24px;
+  margin-top: 28px; /* Dá o distanciamento do último campo do formulário */
+  margin-bottom: 0;
+
+  /* Estilização Sólida de Rodapé */
+  background: var(--roxo-principal);
   color: var(--texto-branco);
   border: none;
-  border-radius: 8px;
-  padding: 16px 24px;
+  padding: 18px; /* Botão alto e robusto */
+  font-size: 1rem;
   font-weight: 600;
-  font-size: 16px;
-  font-family: var(--font-family);
   cursor: pointer;
-  margin-top: 16px;
-  transition: var(--transicao-rapida);
+  
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centraliza perfeitamente o texto e o ícone */
+  gap: 10px;
+  
+  /* Arredonda apenas os cantos inferiores para acompanhar o card branco */
+  border-radius: 0 0 16px 16px; 
+  transition: background 0.2s ease, transform 0.1s ease;
 }
 
 #generate-btn:hover {
-  background-color: var(--roxo-hover);
+  background: var(--roxo-hover);
 }
 
-/* --- PAINEL DO CHAT (ESQUERDA) E PRÉ-VISUALIZAÇÃO (DIREITA) --- */
+#generate-btn:active {
+  transform: scale(0.99);
+}
+/* ================================================================
+   PAINÉIS INFERIORES (chat + preview)
+   ================================================================ */
+
+.dual-panel-container {
+  display: flex;
+  flex: 1;
+  gap: 20px;
+  min-height: 0;
+}
+
 .chat-panel,
 .plan-panel {
-  background-color: var(--fundo-painel);
-  border-radius: 12px;
-  padding: 24px;
+  background: var(--fundo-painel);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--cor-borda);
+  box-shadow: var(--sombra-painel);
   display: flex;
   flex-direction: column;
   width: 50%;
+  min-height: 0;
   overflow: hidden;
-  box-shadow: var(--sombra-painel);
-  border: 1px solid var(--cor-borda);
-  max-height: 55rem;
+  max-height: 600px;
 }
 
+/* Cabeçalho dos painéis */
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--cor-borda);
+  background: linear-gradient(135deg, #faf9ff 0%, #f4f0ff 100%);
+  flex-shrink: 0;
+}
+
+.panel-header-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.3);
+}
+
+.panel-header-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  flex: 1;
+}
+
+.panel-header-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--roxo-principal);
+  background: var(--roxo-light);
+  border: 1px solid var(--roxo-mid);
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+/* ================================================================
+   CHAT
+   ================================================================ */
+
 .chat-messages {
-  flex-grow: 1;
+  flex: 1;
   overflow-y: auto;
-  padding: 0 12px 0 0;
+  padding: 16px 16px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
 }
+
 .message {
-  padding: 12px 16px;
-  border-radius: 16px;
-  margin-bottom: 12px;
-  max-width: 85%;
+  padding: 11px 15px;
+  border-radius: 14px;
+  max-width: 82%;
   line-height: 1.6;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 0.88rem;
+  font-weight: 450;
+  word-break: break-word;
 }
+
 .bot-message {
-  background-color: var(--fundo-componente);
+  background: var(--fundo-componente);
   color: var(--texto-principal);
   align-self: flex-start;
   border-bottom-left-radius: 4px;
+  border: 1px solid var(--cor-borda);
 }
+
 .user-message {
-  background-color: var(--azul-principal);
+  background: linear-gradient(135deg, var(--roxo-principal) 0%, #4a1cc0 100%);
   color: var(--texto-branco);
   align-self: flex-end;
-  margin-left: auto;
   border-bottom-right-radius: 4px;
+  box-shadow: 0 2px 8px rgba(55, 1, 153, 0.3);
 }
+
 .chat-input-area {
   display: flex;
-  gap: 12px;
-  padding-top: 16px;
-  margin-top: 16px;
+  gap: 10px;
+  padding: 14px 16px;
   border-top: 1px solid var(--cor-borda);
   align-items: center;
   flex-shrink: 0;
-  border-radius: 8px;
-  transition: var(--transicao-rapida);
+  background: var(--fundo-painel);
 }
-.chat-input-area:focus-within {
-  box-shadow: 0 0 0 2px var(--roxo-principal);
+
+.chat-input-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: var(--fundo-componente);
+  border: 1.5px solid var(--cor-borda);
+  border-radius: 22px;
+  padding: 0 16px;
+  transition: var(--transition);
 }
+
+.chat-input-wrapper:focus-within {
+  border-color: var(--roxo-principal);
+  background: var(--fundo-painel);
+  box-shadow: 0 0 0 3px rgba(55, 1, 153, 0.08);
+}
+
 #user-input {
-  flex-grow: 1;
+  flex: 1;
   border: none;
-  background-color: transparent;
+  background: transparent;
   color: var(--texto-principal);
-  padding: 12px 4px;
-  font-size: 16px;
+  padding: 11px 0;
+  font-size: 0.88rem;
   font-family: var(--font-family);
   outline: none;
 }
+
+#user-input::placeholder {
+  color: var(--texto-placeholder);
+}
+
 #send-btn {
-  background-color: var(--roxo-principal);
+  background: linear-gradient(135deg, var(--roxo-principal), var(--azul-principal));
   color: var(--texto-branco);
   border: none;
-  border-radius: 8px;
-  width: 48px;
-  height: 48px;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   flex-shrink: 0;
-  transition: var(--transicao-rapida);
+  transition: var(--transition);
+  box-shadow: 0 3px 10px rgba(55, 1, 153, 0.35);
 }
+
 #send-btn:hover {
-  background-color: var(--roxo-hover);
+  transform: scale(1.08);
+  box-shadow: 0 4px 14px rgba(55, 1, 153, 0.5);
 }
+
+#send-btn:active {
+  transform: scale(0.98);
+}
+
+/* ================================================================
+   PAINEL DE PREVIEW
+   ================================================================ */
 
 .plan-output-container {
-  flex-grow: 1;
+  flex: 1;
   overflow-y: auto;
-  padding-right: 12px;
+  padding: 16px 20px;
+  min-height: 0;
   line-height: 1.7;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 0.88rem;
   color: var(--texto-secundario);
 }
-.plan-output-container b {
-  color: var(--texto-principal);
-  font-weight: 600;
-  display: block;
-  margin-top: 24px;
-  margin-bottom: 12px;
-  font-size: 18px;
+
+/* Estado vazio */
+.placeholder-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 10px;
+  opacity: 0.7;
 }
+
+.placeholder-icon {
+  width: 52px;
+  height: 52px;
+  background: var(--roxo-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--roxo-principal);
+}
+
+.placeholder-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.placeholder-text h2 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  text-align: center;
+}
+
+.placeholder-text p {
+  font-size: 0.82rem;
+  color: var(--texto-secundario);
+  text-align: center;
+  max-width: 260px;
+}
+
+/* Conteúdo gerado */
+.plan-output-container b {
+  color: var(--roxo-principal);
+  font-weight: 700;
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
 .plan-output-container ul {
   list-style: none;
+  padding-left: 4px;
 }
+
 .plan-output-container li {
-  margin-bottom: 8px;
-  padding-left: 20px;
+  margin-bottom: 6px;
+  padding-left: 16px;
   position: relative;
+  color: var(--texto-principal);
 }
+
 .plan-output-container li::before {
-  content: '•';
-  color: var(--roxo-principal);
-  font-weight: bold;
-  display: inline-block;
+  content: '▸';
+  color: var(--azul-principal);
+  font-size: 0.75rem;
   position: absolute;
   left: 0;
-  top: 0;
+  top: 2px;
 }
+
+/* Barra inferior do painel de preview */
+.plan-panel-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--cor-borda);
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
 #download-pdf-btn {
-  background-color: var(--roxo-principal);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--roxo-principal) 0%, #5a1ec8 100%);
   color: var(--texto-branco);
   border: none;
-  border-radius: 8px;
-  padding: 12px 24px;
-  font-weight: 600;
-  font-size: 16px;
+  border-radius: var(--radius-md);
+  padding: 10px 20px;
+  font-weight: 700;
+  font-size: 0.85rem;
   font-family: var(--font-family);
   cursor: pointer;
-  margin-top: 24px;
-  align-self: flex-end;
-  flex-shrink: 0;
-  transition: var(--transicao-rapida);
+  transition: var(--transition);
+  box-shadow: 0 3px 10px rgba(55, 1, 153, 0.35);
+  letter-spacing: 0.01em;
 }
+
 #download-pdf-btn:hover {
-  background-color: var(--roxo-hover);
+  box-shadow: 0 5px 16px rgba(55, 1, 153, 0.5);
+  transform: translateY(-1px);
 }
 
-/* Estilização da barra de rolagem (Sutil) */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+/* ================================================================
+   SCROLLBAR
+   ================================================================ */
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background-color: #d0d0e0;
+  background: var(--cor-borda-forte);
   border-radius: 10px;
-  border: 2px solid var(--fundo-painel);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a0c0;
 }
 
-/* Responsividade básica para telas menores */
-@media (max-width: 768px) {
-  .main-container,
-  .dual-panel-container {
-    flex-direction: column;
-  }
+/* ================================================================
+   RESPONSIVIDADE E ADAPTAÇÃO PARA DISPOSITIVOS MÓVEIS
+   ================================================================ */
 
+/* Ajustes gerais para tablets e telas médias (até 900px) */
+@media (max-width: 900px) {
+  .dual-panel-container {
+    flex-direction: column; /* Empilha o Chat e o Painel do Plano de Aula */
+    height: auto;
+    max-height: none;
+  }
+  
   .chat-panel,
   .plan-panel {
     width: 100%;
+    height: 500px; /* Define uma altura confortável fixa para o scroll interno */
+    max-height: 500px;
+  }
+}
+
+/* Ajustes finos para Smartphones (até 640px) */
+@media (max-width: 640px) {
+  html {
+    font-size: 14px; /* Diminui ligeiramente a base da fonte para ganhar espaço */
   }
 
+  /* Header */
   .app-header {
     padding: 0 16px;
   }
+  
+  .header-content {
+    height: auto;
+    padding: 12px 0;
+    flex-direction: column; /* Empilha os logos/botões do header */
+    gap: 12px;
+    align-items: center;
+  }
+
+  .header-nav {
+    display: none; /* Oculta links secundários de navegação que ocupam muito espaço */
+  }
+
+  .cta-button {
+    width: 100%;
+    justify-content: center; /* Botão institucional ocupa largura total */
+  }
+
+  /* Container Principal */
+  .main-container {
+    padding: 16px 12px;
+    gap: 16px;
+  }
+
+  /* Painel de Informações e Formulário */
+  .info-panel-header {
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .info-panel-body {
+    padding: 16px;
+    padding-bottom: 0; /* Mantém zerado no mobile */
+  }
+
+  /* CRITICAL: Quebra as linhas do formulário para exibição vertical */
+  .form-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .form-group {
+    width: 100%;
+  }
+
+  /* Ajusta o botão de gerar para ocupar a largura inteira no mobile */
+  #generate-btn {
+    /* Ajusta o cálculo para o padding de 16px do mobile */
+    width: calc(100% + 32px); 
+    margin-left: -16px;
+    margin-right: -16px;
+    margin-top: 20px;
+    padding: 16px;
+    
+    /* Acompanha o raio de curvatura dos cards mobile se for diferente */
+    border-radius: 0 0 12px 12px;
+  }
+
+  /* Facilita o clique nos checkboxes em telas touch */
+  .checkbox-group {
+    gap: 6px;
+  }
+
+  .checkbox-group label {
+    width: 100%; /* Faz cada opção ocupar uma linha inteira, virando um botão grande */
+    justify-content: flex-start;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
 }
+
+/* ================================================================
+   UTILITÁRIO — classe .page para o template PDF (não alterar)
+   ================================================================ */
 
 .page {
-    border: 1px solid #000;
-    padding: 20px;
-    position: relative;
-    min-height: 800px; /* Garante que o PDF tenha um tamanho mínimo */
-    /* Este estilo 'display: block' é importante para o preview em HTML */
-    display: block; 
-    background-color: white; /* Garante fundo branco para o PDF */
+  border: 1px solid #000;
+  padding: 20px;
+  position: relative;
+  min-height: 800px;
+  display: block;
+  background-color: white;
 }
-

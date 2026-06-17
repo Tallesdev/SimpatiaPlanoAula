@@ -398,3 +398,63 @@
     bottom: 16px;
   }
 }
+
+/* ============================================================
+   RESPONSIVIDADE DO CHAT TUTORIAL (MÓVEL)
+   ============================================================ */
+
+@media (max-width: 480px) {
+  /* Move o botão flutuante um pouco mais para o canto */
+  #tutorial-fab {
+    bottom: 16px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+  }
+
+  #tutorial-fab-pulse {
+    bottom: 16px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+  }
+
+  /* Esconde o tooltip de texto ("Precisa de ajuda?") para não poluir o mobile */
+  #tutorial-fab::before {
+    display: none !important;
+  }
+
+  /* Transforma o painel de tutorial em quase tela cheia */
+  #tutorial-panel {
+    bottom: 76px;
+    right: 16px;
+    left: 16px; /* Define margem na esquerda para expandir responsivamente */
+    width: auto; /* Cancela a largura fixa de 360px */
+    height: calc(100vh - 100px); /* Ocupa a maior parte da altura disponível */
+    max-height: 500px;
+    border-radius: 12px;
+  }
+  
+  /* Melhora o padding interno das mensagens no mobile */
+  #tutorial-messages {
+    padding: 12px;
+  }
+  
+  .tut-msg {
+    max-width: 92%;
+    font-size: 13px;
+  }
+
+  /* Ajusta os chips de perguntas rápidas para rolagem horizontal se necessário */
+  #tutorial-chips-container {
+    padding: 8px;
+    gap: 6px;
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+  }
+
+  .tut-chip {
+    flex-shrink: 0;
+  }
+}
